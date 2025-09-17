@@ -1,3 +1,51 @@
+export interface DemoVideo {
+  id: string;
+  title: string;
+  description: string;
+  videoUrl: string;
+  thumbnailUrl?: string;
+  duration: number;
+  creator: {
+    id: string;
+    name: string;
+    avatar: string;
+    address?: string;
+  };
+  createdAt: string;
+  category: string;
+  tags: string[];
+  responseCount: number;
+  resonanceScore: number;
+  qrCodeUrl?: string;
+  feedbackVaultId: string;
+  allowAnonymous?: boolean;
+  enableTips?: boolean;
+}
+
+export interface FeedbackVault {
+  id: string;
+  title: string;
+  description?: string;
+  type: 'demo' | 'external'; // demo = hosted on Voxera, external = podcast/livestream etc
+  demoVideoId?: string; // if type is 'demo'
+  externalUrl?: string; // if type is 'external'
+  creator: {
+    id: string;
+    name: string;
+    avatar: string;
+    address?: string;
+  };
+  createdAt: string;
+  responseCount: number;
+  resonanceScore: number;
+  responses: VoiceResponse[];
+  category?: string;
+  allowAnonymous?: boolean;
+  enableTips?: boolean;
+}
+
+// Keep Survey for backward compatibility but mark as deprecated
+/** @deprecated Use DemoVideo and FeedbackVault instead */
 export interface Survey {
   id: string;
   title: string;
@@ -24,7 +72,8 @@ export interface Survey {
 
 export interface VoiceResponse {
   id: string;
-  surveyId: string;
+  vaultId: string; // Changed from surveyId to vaultId
+  surveyId?: string; // Keep for backward compatibility
   userId: string;
   user: {
     id: string;
@@ -89,6 +138,38 @@ export interface AuthState {
   isLoading: boolean;
 }
 
+export interface CreateDemoVideoRequest {
+  title: string;
+  description: string;
+  category: string;
+  tags: string[];
+  videoFile: File | { uri: string; name: string; type: string };
+  thumbnailFile?: File | { uri: string; name: string; type: string };
+  allowAnonymous?: boolean;
+  enableTips?: boolean;
+}
+
+export interface CreateFeedbackVaultRequest {
+  title: string;
+  description?: string;
+  type: 'external';
+  externalUrl: string;
+  category?: string;
+  allowAnonymous?: boolean;
+  enableTips?: boolean;
+}
+
+export interface CreateResponseRequest {
+  vaultId: string;
+  surveyId?: string; // Keep for backward compatibility
+  type: 'text' | 'audio';
+  content?: string;
+  audioFile?: File | { uri: string; name: string; type: string };
+  duration?: number;
+}
+
+// Keep for backward compatibility
+/** @deprecated Use CreateDemoVideoRequest or CreateFeedbackVaultRequest instead */
 export interface CreateSurveyRequest {
   title: string;
   question: string;
@@ -97,12 +178,4 @@ export interface CreateSurveyRequest {
   allowAnonymous?: boolean;
   enableTips?: boolean;
   voicePromptFile?: File | { uri: string; name: string; type: string };
-}
-
-export interface CreateResponseRequest {
-  surveyId: string;
-  type: 'text' | 'audio';
-  content?: string;
-  audioFile?: File | { uri: string; name: string; type: string };
-  duration?: number;
 }
