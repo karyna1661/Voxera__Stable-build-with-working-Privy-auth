@@ -15,7 +15,7 @@ interface VoiceResponseCardProps {
 export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResponseCardProps) {
   const { isPlaying, play, pause } = useAudioPlayer();
   const resonanceMutation = useResonanceInteraction();
-  const { data: survey } = useSurvey(response.surveyId);
+  const { data: survey } = useSurvey(response.surveyId || response.vaultId || '');
   const { isAuthenticated, user } = useAuth();
 
   const handlePlayPause = () => {
@@ -41,7 +41,10 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
   };
 
   const handleSurveyPress = () => {
-    router.push(`/survey/${response.surveyId}`);
+    const surveyId = response.surveyId || response.vaultId;
+    if (surveyId) {
+      router.push(`/survey/${surveyId}`);
+    }
   };
 
   const formatDuration = (ms: number) => {
@@ -102,11 +105,11 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         </View>
       </View>
 
-      {showSurveyLink && survey && (
+      {showSurveyLink && (response.surveyId || response.vaultId) && (
         <TouchableOpacity style={styles.surveyLink} onPress={handleSurveyPress}>
           <MessageSquare size={14} color="#6b7280" />
           <Text style={styles.surveyLinkText} numberOfLines={2}>
-            &ldquo;{survey.title}&rdquo;
+            {survey ? `"${survey.title}"` : 'View original survey'}
           </Text>
         </TouchableOpacity>
       )}
@@ -260,27 +263,30 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 12,
+    justifyContent: 'space-between',
+    paddingTop: 16,
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
-    gap: 10,
+    paddingHorizontal: 8,
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
-    borderRadius: 10,
-    backgroundColor: '#f9fafb',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderRadius: 12,
+    backgroundColor: '#f8fafc',
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: '#e2e8f0',
+    minWidth: 72,
+    flex: 1,
+    marginHorizontal: 4,
   },
   actionText: {
-    fontSize: 12,
+    fontSize: 13,
     color: '#6b7280',
-    marginLeft: 4,
-    fontWeight: '500',
+    marginLeft: 6,
+    fontWeight: '600',
   },
 });

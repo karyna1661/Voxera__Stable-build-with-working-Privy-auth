@@ -212,16 +212,17 @@ const styles = StyleSheet.create({
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    gap: 16,
+    justifyContent: 'space-between',
+    gap: 8,
   },
   animatedAction: {
     transform: [{ scale: 1 }],
+    flex: 1,
   },
   actionButton: {
-    width: 44,
+    width: '100%',
     height: 44,
-    borderRadius: 22,
+    borderRadius: 12,
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
     alignItems: 'center',

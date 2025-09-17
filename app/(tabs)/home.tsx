@@ -6,7 +6,7 @@ import { VoiceResponseCard } from '@/components/VoiceResponseCard';
 import { RecordButton } from '@/components/RecordButton';
 import { DemoVideo, VoiceResponse } from '@/types/survey';
 import { PrivySignInButton, useAuth } from '@/providers/auth';
-import { X, Play, MessageCircle, TrendingUp } from 'lucide-react-native';
+import { X, Play, MessageCircle, TrendingUp, Repeat } from 'lucide-react-native';
 import { mockDemoVideos, mockVoiceResponses } from '@/mocks/surveys';
 import { router } from 'expo-router';
 
@@ -180,8 +180,20 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
             <Text style={demoStyles.feedbackText}>{demo.responseCount} voice responses</Text>
           </TouchableOpacity>
           
+          <View style={demoStyles.actions}>
+            <TouchableOpacity style={demoStyles.actionButton}>
+              <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
+            </TouchableOpacity>
+            <TouchableOpacity style={demoStyles.actionButton}>
+              <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
+            </TouchableOpacity>
+            <TouchableOpacity style={demoStyles.actionButton}>
+              <X size={16} color="#6b7280" strokeWidth={1.5} />
+            </TouchableOpacity>
+          </View>
+          
           <View style={demoStyles.resonanceScore}>
-            <TrendingUp size={16} color="#10b981" />
+            <TrendingUp size={14} color="#10b981" />
             <Text style={demoStyles.resonanceText}>{demo.resonanceScore}</Text>
           </View>
         </View>
@@ -319,6 +331,10 @@ const demoStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#f3f4f6',
+    marginTop: 8,
   },
   feedbackButton: {
     flexDirection: 'row',
@@ -330,13 +346,32 @@ const demoStyles = StyleSheet.create({
     fontWeight: '500',
     color: '#6366f1',
   },
+  actions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  actionButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: '#f8fafc',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
   resonanceScore: {
     flexDirection: 'row',
     alignItems: 'center',
+    backgroundColor: '#f0fdf4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
     gap: 4,
   },
   resonanceText: {
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: '600',
     color: '#10b981',
   },
