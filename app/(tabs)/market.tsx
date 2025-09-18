@@ -173,7 +173,7 @@ const demoStyles = StyleSheet.create({
   },
   videoContainer: {
     position: 'relative',
-    aspectRatio: 16 / 9,
+    aspectRatio: 16 / 8.5,
   },
   thumbnail: {
     width: '100%',
@@ -256,7 +256,7 @@ const demoStyles = StyleSheet.create({
   tags: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginBottom: 16,
+    marginBottom: 8,
     gap: 8,
   },
   tag: {
@@ -277,7 +277,7 @@ const demoStyles = StyleSheet.create({
     paddingTop: 8,
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
-    marginTop: 8,
+    marginTop: 4,
   },
   feedbackButton: {
     flexDirection: 'row',
