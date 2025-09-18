@@ -218,7 +218,7 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
 const demoStyles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    marginHorizontal: 16,
+    marginHorizontal: spacing(12),
     marginVertical: 8,
     borderRadius: 16,
     shadowColor: '#000',
