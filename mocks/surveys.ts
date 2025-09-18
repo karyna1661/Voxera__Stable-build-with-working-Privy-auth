@@ -142,7 +142,7 @@ export const mockVoiceResponses: VoiceResponse[] = [
   {
     id: 'response-1',
     vaultId: 'vault-demo-1',
-    surveyId: 'survey-1', // backward compatibility
+    surveyId: '1', // Link to Base Chain Adoption survey
     userId: '2',
     user: mockUsers[1],
     audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
@@ -160,7 +160,7 @@ export const mockVoiceResponses: VoiceResponse[] = [
   {
     id: 'response-2',
     vaultId: 'vault-demo-2',
-    surveyId: 'survey-2',
+    surveyId: '2', // Link to Farcaster vs Twitter survey
     userId: '3',
     user: mockUsers[2],
     audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
@@ -178,7 +178,7 @@ export const mockVoiceResponses: VoiceResponse[] = [
   {
     id: 'response-3',
     vaultId: 'vault-demo-3',
-    surveyId: 'survey-3',
+    surveyId: '3', // Link to DeFi on Base survey
     userId: '4',
     user: mockUsers[3],
     audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
@@ -196,6 +196,7 @@ export const mockVoiceResponses: VoiceResponse[] = [
   {
     id: 'response-4',
     vaultId: 'vault-external-1',
+    surveyId: '4', // Link to Onchain Social Future survey
     userId: '5',
     user: mockUsers[4],
     audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
@@ -401,6 +402,50 @@ export const mockResponses: VoiceResponse[] = [
     interactions: {
       boosts: 9,
       echoes: 7,
+      mutes: 0,
+    },
+  },
+  {
+    id: 'resp4',
+    vaultId: 'vault-legacy-3',
+    surveyId: '5', // Link to Base Ecosystem Growth survey
+    userId: 'user10',
+    user: {
+      id: 'user10',
+      name: 'Maya Patel',
+      avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+    },
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    type: 'audio' as const,
+    duration: 52000,
+    transcript: 'I think gaming dApps on Base would be huge. The low fees make microtransactions actually viable.',
+    createdAt: '2025-01-08T14:20:00Z',
+    resonanceScore: 67,
+    interactions: {
+      boosts: 24,
+      echoes: 12,
+      mutes: 1,
+    },
+  },
+  {
+    id: 'resp5',
+    vaultId: 'vault-legacy-4',
+    surveyId: '6', // Link to Farcaster Frames Innovation survey
+    userId: 'user11',
+    user: {
+      id: 'user11',
+      name: 'Alex Thompson',
+      avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+    },
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    type: 'audio' as const,
+    duration: 41000,
+    transcript: 'The prediction market frames are incredible. Being able to bet directly in the feed is revolutionary.',
+    createdAt: '2025-01-07T16:45:00Z',
+    resonanceScore: 89,
+    interactions: {
+      boosts: 31,
+      echoes: 18,
       mutes: 0,
     },
   }

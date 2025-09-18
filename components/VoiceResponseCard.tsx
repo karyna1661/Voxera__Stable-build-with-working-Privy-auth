@@ -3,9 +3,10 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { VoiceResponse } from '@/types/survey';
 import { Play, Pause, TrendingUp, Repeat, X, MessageSquare } from 'lucide-react-native';
 import { useAudioPlayer } from '@/hooks/use-audio-player';
-import { useResonanceInteraction, useSurvey } from '@/hooks/use-surveys';
+import { useResonanceInteraction } from '@/hooks/use-surveys';
 import { router } from 'expo-router';
 import { useAuth } from '@/providers/auth';
+import { mockSurveys, mockDemoVideos, mockFeedbackVaults } from '@/mocks/surveys';
 
 interface VoiceResponseCardProps {
   response: VoiceResponse;
@@ -15,8 +16,37 @@ interface VoiceResponseCardProps {
 export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResponseCardProps) {
   const { isPlaying, play, pause } = useAudioPlayer();
   const resonanceMutation = useResonanceInteraction();
-  const { data: survey } = useSurvey(response.surveyId || response.vaultId || '');
   const { isAuthenticated, user } = useAuth();
+
+  // Get the original content (survey, demo video, or feedback vault) that this response is for
+  const getOriginalContent = () => {
+    // First try to find a survey
+    if (response.surveyId) {
+      const foundSurvey = mockSurveys.find(s => s.id === response.surveyId);
+      if (foundSurvey) {
+        return { type: 'survey', content: foundSurvey, id: response.surveyId };
+      }
+    }
+    
+    // Then try to find a feedback vault
+    if (response.vaultId) {
+      const vault = mockFeedbackVaults.find(v => v.id === response.vaultId);
+      if (vault) {
+        if (vault.type === 'demo' && vault.demoVideoId) {
+          // If it's a demo vault, get the demo video
+          const demoVideo = mockDemoVideos.find(d => d.id === vault.demoVideoId);
+          if (demoVideo) {
+            return { type: 'demo', content: demoVideo, id: vault.demoVideoId };
+          }
+        }
+        return { type: 'vault', content: vault, id: response.vaultId };
+      }
+    }
+    
+    return null;
+  };
+
+  const originalContent = getOriginalContent();
 
   const handlePlayPause = () => {
     if (isPlaying) {
@@ -41,9 +71,22 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
   };
 
   const handleSurveyPress = () => {
-    const surveyId = response.surveyId || response.vaultId;
-    if (surveyId) {
-      router.push(`/survey/${surveyId}`);
+    if (!originalContent) return;
+    
+    if (originalContent.type === 'survey') {
+      router.push(`/survey/${originalContent.id}`);
+    } else if (originalContent.type === 'demo') {
+      // For demo videos, we could navigate to a demo detail page
+      // For now, let's navigate to the survey page if it exists
+      if (response.surveyId) {
+        router.push(`/survey/${response.surveyId}`);
+      }
+    } else if (originalContent.type === 'vault') {
+      // For external vaults, we could show the external URL or vault details
+      // For now, let's navigate to the survey page if it exists
+      if (response.surveyId) {
+        router.push(`/survey/${response.surveyId}`);
+      }
     }
   };
 
@@ -105,11 +148,11 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         </View>
       </View>
 
-      {showSurveyLink && (response.surveyId || response.vaultId) && (
+      {showSurveyLink && originalContent && (
         <TouchableOpacity style={styles.surveyLink} onPress={handleSurveyPress}>
           <MessageSquare size={14} color="#6b7280" />
           <Text style={styles.surveyLinkText} numberOfLines={2}>
-            {survey ? survey.title : 'View original survey'}
+            {originalContent.content.title}
           </Text>
         </TouchableOpacity>
       )}
