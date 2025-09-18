@@ -168,7 +168,15 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
         <Text style={demoStyles.title}>{demo.title}</Text>
         <Text style={demoStyles.description} numberOfLines={2}>{demo.description}</Text>
         
-
+        {demo.tags && demo.tags.length > 0 && (
+          <View style={demoStyles.tagsContainer}>
+            {demo.tags.map((tag, index) => (
+              <View key={`tag-${index}`} style={demoStyles.tag}>
+                <Text style={demoStyles.tagText}>{tag}</Text>
+              </View>
+            ))}
+          </View>
+        )}
         
         <View style={demoStyles.footer}>
           <TouchableOpacity style={demoStyles.feedbackButton} onPress={handleFeedbackPress}>
@@ -359,6 +367,25 @@ const demoStyles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     color: '#10b981',
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    marginBottom: 16,
+  },
+  tag: {
+    backgroundColor: '#f1f5f9',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#64748b',
+    fontWeight: '500',
   },
 });
 

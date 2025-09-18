@@ -90,8 +90,7 @@ export function SurveyCard({ survey }: SurveyCardProps) {
       <View style={styles.footer}>
         <TouchableOpacity style={styles.responseCount} onPress={(e) => {
           e.stopPropagation();
-          // Navigate to responses view - for now just handle the press
-          console.log('Navigate to responses for survey:', survey.id);
+          router.push(`/survey/${survey.id}`);
         }}>
           <MessageCircle size={16} color="#6366f1" strokeWidth={1.5} />
           <Text style={styles.responseText}>{survey.responseCount} voice responses</Text>
