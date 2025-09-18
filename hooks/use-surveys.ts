@@ -15,9 +15,9 @@ export function useSurveys(filter?: 'trending' | 'newest') {
         console.log('Using mock data for surveys');
         await new Promise(resolve => setTimeout(resolve, 500));
         
-        // Get surveys from localStorage if available, otherwise use mock data
+        // Get surveys from storage if available, otherwise use mock data
         let surveys = [...mockSurveys];
-        if (typeof window !== 'undefined') {
+        if (Platform.OS === 'web' && typeof window !== 'undefined') {
           const storedSurveys = localStorage.getItem('allSurveys');
           if (storedSurveys) {
             surveys = JSON.parse(storedSurveys);
@@ -70,9 +70,9 @@ export function useSurvey(id: string) {
         console.log('Using mock data for survey:', id);
         await new Promise(resolve => setTimeout(resolve, 300));
         
-        // Check localStorage first, then fallback to mock data
+        // Check storage first, then fallback to mock data
         let allSurveys = [...mockSurveys];
-        if (typeof window !== 'undefined') {
+        if (Platform.OS === 'web' && typeof window !== 'undefined') {
           const storedSurveys = localStorage.getItem('allSurveys');
           if (storedSurveys) {
             allSurveys = JSON.parse(storedSurveys);
@@ -130,8 +130,8 @@ export function useCreateSurvey() {
           enableTips: data.enableTips,
         };
         
-        // Store in localStorage for persistence in mock mode
-        if (typeof window !== 'undefined') {
+        // Store in storage for persistence in mock mode
+        if (Platform.OS === 'web' && typeof window !== 'undefined') {
           // Store user-specific surveys
           const userSurveysKey = `userSurveys_${data.user.address.toLowerCase()}`;
           const existingUserSurveys = JSON.parse(localStorage.getItem(userSurveysKey) || '[]');
@@ -179,7 +179,7 @@ export function useResonanceInteraction() {
       return apiService.submitResonanceInteraction(
         interaction.type,
         interaction.targetId,
-        interaction.targetType
+        interaction.targetType as 'survey' | 'response'
       );
     },
     onSuccess: (_, interaction) => {
@@ -201,8 +201,8 @@ export function useUserSurveys(userAddress?: string) {
         console.log('Fetching user surveys for:', userAddress);
         await new Promise(resolve => setTimeout(resolve, 300));
         
-        // Get surveys from localStorage in mock mode
-        if (typeof window !== 'undefined') {
+        // Get surveys from storage in mock mode
+        if (Platform.OS === 'web' && typeof window !== 'undefined') {
           // First try user-specific key
           const userSurveysKey = `userSurveys_${userAddress.toLowerCase()}`;
           const userSpecificSurveys = JSON.parse(localStorage.getItem(userSurveysKey) || '[]');
@@ -271,6 +271,7 @@ export function useSubmitResponse() {
       }
       
       const requestData: CreateResponseRequest = {
+        vaultId: surveyId, // Use surveyId as vaultId for backward compatibility
         surveyId,
         type: 'audio',
         audioFile,

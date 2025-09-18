@@ -27,6 +27,8 @@ function RootLayoutNav() {
     <Stack screenOptions={{ headerBackTitle: "Back" }}>
       <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
       <Stack.Screen name="survey/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="demo/[id]" options={{ headerShown: false }} />
+      <Stack.Screen name="qr/[id]" options={{ headerShown: false }} />
       <Stack.Screen name="record" options={{ presentation: "modal", headerShown: false }} />
       <Stack.Screen name="create-survey" options={{ presentation: "modal", headerShown: false }} />
     </Stack>
@@ -84,8 +86,8 @@ export default function RootLayout() {
 
   return (
     <AppErrorBoundary>
-      <trpc.Provider client={trpcClient} queryClient={queryClient}>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <trpc.Provider client={trpcClient} queryClient={queryClient}>
           <StorageProvider>
             <AuthProvider>
               <GestureHandlerRootView style={styles.container}>
@@ -93,8 +95,8 @@ export default function RootLayout() {
               </GestureHandlerRootView>
             </AuthProvider>
           </StorageProvider>
-        </QueryClientProvider>
-      </trpc.Provider>
+        </trpc.Provider>
+      </QueryClientProvider>
     </AppErrorBoundary>
   );
 }
