@@ -164,17 +164,29 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
       )}
 
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.responseCount} onPress={() => {
-          // Navigate to nested responses or show response detail
-          const nestedResponses = mockVoiceResponses.filter(r => r.parentResponseId === response.id);
-          if (nestedResponses.length > 0) {
-            console.log(`Navigate to ${nestedResponses.length} nested responses for response:`, response.id);
-            // In a real app, this would navigate to a response detail page showing nested responses
-          } else {
-            console.log('No nested responses, could open record response modal');
-            // Could open a modal to record a response to this response
-          }
-        }}>
+        <TouchableOpacity
+          style={styles.responseCount}
+          onPress={() => {
+            if (!originalContent) return;
+            if (originalContent.type === 'survey') {
+              router.push(`/survey/${originalContent.id}`);
+              return;
+            }
+            if (originalContent.type === 'demo') {
+              router.push(`/demo/${originalContent.id}`);
+              return;
+            }
+            if (response.surveyId) {
+              router.push(`/survey/${response.surveyId}`);
+              return;
+            }
+            const nestedResponses = mockVoiceResponses.filter(r => r.parentResponseId === response.id);
+            if (nestedResponses.length > 0) {
+              console.log(`Navigate to ${nestedResponses.length} nested responses for response:`, response.id);
+            }
+          }}
+          testID="response-count-button"
+        >
           <MessageSquare size={16} color="#6366f1" strokeWidth={1.5} />
           <Text style={styles.responseText}>{mockVoiceResponses.filter(r => r.parentResponseId === response.id).length || response.interactions.boosts + response.interactions.echoes} voice responses</Text>
         </TouchableOpacity>
