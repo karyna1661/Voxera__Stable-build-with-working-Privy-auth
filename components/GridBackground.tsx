@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, Platform, ImageBackground } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 interface GridBackgroundProps {
   children: React.ReactNode;
@@ -7,84 +8,68 @@ interface GridBackgroundProps {
 }
 
 export function GridBackground({ children, style }: GridBackgroundProps) {
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      const styleElement = document.createElement('style');
-      styleElement.textContent = `
-        @keyframes shaderFlow {
-          0% { transform: translateX(-10px) translateY(-5px) scale(1.02); filter: hue-rotate(0deg) brightness(1.1); }
-          50% { transform: translateX(5px) translateY(3px) scale(1.05); filter: hue-rotate(10deg) brightness(1.2); }
-          100% { transform: translateX(-5px) translateY(-2px) scale(1.03); filter: hue-rotate(-5deg) brightness(1.15); }
-        }
-      `;
-      document.head.appendChild(styleElement);
-      return () => {
-        document.head.removeChild(styleElement);
-      };
-    }
-  }, []);
-
-  if (Platform.OS === 'web') {
-    return (
-      <View style={[styles.container, style]}>
-        <View style={styles.shaderGradient} />
-        <View style={styles.gridOverlay} />
-        <View style={styles.content}>{children}</View>
-      </View>
-    );
-  }
+  const { width, height } = useWindowDimensions();
+  const vGap = 16;
+  const hGap = 24;
+  const vCount = Math.ceil(width / vGap);
+  const hCount = Math.ceil(height / hGap);
 
   return (
-    <View style={[styles.container, style]}>
-      <ImageBackground
-        source={{ uri: 'https://images.unsplash.com/photo-1534088568595-a066f410bcda?q=80&w=1600&auto=format&fit=crop' }}
-        style={styles.nativeBg}
-        resizeMode="cover"
-        imageStyle={styles.nativeBgImage}
-      >
-        <View style={styles.nativeOverlay} />
-        <View style={styles.content}>{children}</View>
-      </ImageBackground>
+    <View style={[styles.container, style]} testID="grid-background">
+      <LinearGradient
+        colors={[
+          '#052e26',
+          '#064e3b',
+          '#065f46',
+        ]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={styles.gradient}
+      />
+
+      <View pointerEvents="none" style={styles.linesContainer}>
+        <View style={styles.horizontalLines}>
+          {Array.from({ length: hCount }).map((_, i) => (
+            <View key={`h-${i}`} style={[styles.hLine, { top: i * hGap }]} />
+          ))}
+        </View>
+        <View style={styles.verticalLines}>
+          {Array.from({ length: vCount }).map((_, i) => (
+            <View key={`v-${i}`} style={[styles.vLine, { left: i * vGap }]} />
+          ))}
+        </View>
+      </View>
+
+      <View style={styles.content}>{children}</View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, position: 'relative', backgroundColor: '#0ea5e9' },
-  nativeBg: { flex: 1 },
-  nativeBgImage: { opacity: 0.45 },
-  nativeOverlay: {
+  container: { flex: 1, position: 'relative', backgroundColor: '#052e26' },
+  gradient: { ...StyleSheet.absoluteFillObject },
+  linesContainer: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(148, 255, 209, 0.35)',
   },
-  shaderGradient: {
+  horizontalLines: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  verticalLines: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  hLine: {
     position: 'absolute',
-    top: 0,
     left: 0,
     right: 0,
-    bottom: 0,
-    ...(Platform.OS === 'web'
-      ? {
-          background: `radial-gradient(ellipse 80% 50% at 50% 0%, rgba(148, 255, 209, 0.8) 0%, rgba(107, 245, 255, 0.6) 40%, rgba(255, 255, 255, 0.3) 70%, transparent 100%), linear-gradient(135deg, rgba(148, 255, 209, 0.4) 0%, rgba(107, 245, 255, 0.3) 50%, rgba(255, 255, 255, 0.2) 100%)`,
-          animation: 'shaderFlow 8s ease-in-out infinite alternate',
-        }
-      : {}),
+    height: 1,
+    backgroundColor: 'rgba(16, 185, 129, 0.15)',
   },
-  gridOverlay: {
+  vLine: {
     position: 'absolute',
     top: 0,
-    left: 0,
-    right: 0,
     bottom: 0,
-    ...(Platform.OS === 'web'
-      ? {
-          backgroundImage: `linear-gradient(to right, rgba(79, 79, 79, 0.12) 1px, transparent 1px), linear-gradient(to bottom, rgba(79, 79, 79, 0.12) 1px, transparent 1px)`,
-          backgroundSize: '14px 24px',
-          maskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          WebkitMaskImage: 'radial-gradient(ellipse 80% 50% at 50% 0%, black 70%, transparent 110%)',
-          zIndex: 1,
-        }
-      : {}),
+    width: 1,
+    backgroundColor: 'rgba(16, 185, 129, 0.15)',
   },
   content: { flex: 1, position: 'relative', zIndex: 2 },
 });
