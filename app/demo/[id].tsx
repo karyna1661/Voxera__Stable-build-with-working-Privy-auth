@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, ScrollView, Text, TouchableOpacity, Image, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
-import { ArrowLeft, Mic, TrendingUp, Repeat, X, Play } from 'lucide-react-native';
+import { Mic, TrendingUp, Repeat, X, Play } from 'lucide-react-native';
 import { useResonanceInteraction } from '@/hooks/use-surveys';
 import { VoiceResponseCard } from '@/components/VoiceResponseCard';
 import { GridBackground } from '@/components/GridBackground';
@@ -95,14 +95,6 @@ export default function DemoDetailScreen() {
   return (
     <GridBackground>
       <SafeAreaView style={styles.container} edges={['top']}>
-        <View style={styles.header}>
-          <TouchableOpacity style={styles.backIcon} onPress={handleBack}>
-            <ArrowLeft size={24} color="#1f2937" />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>Demo</Text>
-          <View style={styles.placeholder} />
-        </View>
-
         <ScrollView contentContainerStyle={styles.content}>
           <View style={styles.demoCard}>
             {/* Video Section */}
@@ -202,27 +194,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    backgroundColor: '#ffffff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
-  },
-  backIcon: {
-    padding: 4,
-  },
-  headerTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#1f2937',
-  },
-  placeholder: {
-    width: 32,
-  },
+
   content: {
     paddingBottom: 32,
   },
