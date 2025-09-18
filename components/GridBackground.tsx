@@ -1,31 +1,53 @@
-import React from 'react';
-import { View, StyleSheet, useWindowDimensions } from 'react-native';
+import React, { useMemo } from 'react';
+import { View, StyleSheet, useWindowDimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Image } from 'expo-image';
 
 interface GridBackgroundProps {
   children: React.ReactNode;
   style?: any;
+  mode?: 'shader' | 'gradient';
+  shaderUrl?: string;
 }
 
-export function GridBackground({ children, style }: GridBackgroundProps) {
+export function GridBackground({ children, style, mode = 'shader', shaderUrl }: GridBackgroundProps) {
   const { width, height } = useWindowDimensions();
   const vGap = 16;
   const hGap = 24;
   const vCount = Math.ceil(width / vGap);
   const hCount = Math.ceil(height / hGap);
 
+  const animatedUrl = useMemo(() => {
+    const fallback = 'https://images.shadergradient.co/4f3b9e1f-animated.gif';
+    return (
+      shaderUrl ??
+      'https://www.shadergradient.co/api/export?animate=on&axesHelper=off&brightness=1.2&cAzimuthAngle=170&cDistance=4.4&cPolarAngle=70&cameraZoom=1&color1=%2394ffd1&color2=%236bf5ff&color3=%23ffffff&destination=onCanvas&embedMode=off&envPreset=city&format=gif&fov=45&frameRate=10&gizmoHelper=hide&grain=off&lightType=3d&pixelDensity=1.2&positionX=0&positionY=0.9&positionZ=-0.3&range=disabled&rangeEnd=40&rangeStart=0&reflection=0.1&rotationX=45&rotationY=0&rotationZ=0&shader=defaults&toggleAxis=false&type=plane&uAmplitude=3.3&uDensity=3.3&uFrequency=0&uSpeed=1.1&uStrength=4.6&uTime=0&wireframe=false&zoomOut=true'
+    ) || fallback;
+  }, [shaderUrl]);
+
+  const useShader = mode === 'shader' && Platform.select({ web: true, default: true });
+
   return (
     <View style={[styles.container, style]} testID="grid-background">
-      <LinearGradient
-        colors={[
-          '#052e26',
-          '#064e3b',
-          '#065f46',
-        ]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={styles.gradient}
-      />
+      {useShader ? (
+        <Image
+          source={{ uri: animatedUrl }}
+          style={styles.background}
+          contentFit="cover"
+          accessibilityLabel="Animated shader background"
+          testID="shader-background"
+          onError={(_e) => {
+            console.warn('Shader background failed to load, falling back to gradient');
+          }}
+        />
+      ) : (
+        <LinearGradient
+          colors={['#052e26', '#064e3b', '#065f46']}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.background}
+        />
+      )}
 
       <View pointerEvents="none" style={styles.linesContainer}>
         <View style={styles.horizontalLines}>
@@ -47,29 +69,23 @@ export function GridBackground({ children, style }: GridBackgroundProps) {
 
 const styles = StyleSheet.create({
   container: { flex: 1, position: 'relative', backgroundColor: '#052e26' },
-  gradient: { ...StyleSheet.absoluteFillObject },
-  linesContainer: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  horizontalLines: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  verticalLines: {
-    ...StyleSheet.absoluteFillObject,
-  },
+  background: { ...StyleSheet.absoluteFillObject },
+  linesContainer: { ...StyleSheet.absoluteFillObject },
+  horizontalLines: { ...StyleSheet.absoluteFillObject },
+  verticalLines: { ...StyleSheet.absoluteFillObject },
   hLine: {
     position: 'absolute',
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(16, 185, 129, 0.12)',
   },
   vLine: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: 1,
-    backgroundColor: 'rgba(16, 185, 129, 0.15)',
+    backgroundColor: 'rgba(16, 185, 129, 0.12)',
   },
   content: { flex: 1, position: 'relative', zIndex: 2 },
 });
