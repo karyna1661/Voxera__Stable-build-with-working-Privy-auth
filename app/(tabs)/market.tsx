@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
 import { RecordButton } from '@/components/RecordButton';
+import { GridBackground } from '@/components/GridBackground';
 import { DemoVideo } from '@/types/survey';
 import { PrivySignInButton } from '@/providers/auth';
 import { Play, MessageCircle, TrendingUp, Upload, Repeat, X } from 'lucide-react-native';
@@ -42,11 +43,12 @@ export default function MarketScreen() {
   );
 
   const handleUploadDemo = () => {
-    router.push('/upload-demo');
+    // router.push('/upload-demo');
+    console.log('Upload demo pressed');
   };
 
   return (
-    <View style={styles.container}>
+    <GridBackground style={styles.container}>
       <FlatList
         data={mockDemoVideos}
         renderItem={renderDemo}
@@ -61,18 +63,20 @@ export default function MarketScreen() {
       <TouchableOpacity style={styles.uploadButton} onPress={handleUploadDemo}>
         <Upload size={24} color="#ffffff" />
       </TouchableOpacity>
-    </View>
+    </GridBackground>
   );
 }
 
 // Demo Video Card Component
 function DemoVideoCard({ demo }: { demo: DemoVideo }) {
   const handlePress = () => {
-    router.push(`/demo/${demo.id}`);
+    // router.push(`/demo/${demo.id}`);
+    console.log('Demo pressed:', demo.id);
   };
 
   const handleFeedbackPress = () => {
-    router.push(`/vault/${demo.feedbackVaultId}`);
+    // router.push(`/vault/${demo.feedbackVaultId}`);
+    console.log('Feedback pressed:', demo.feedbackVaultId);
   };
 
   const formatDuration = (seconds: number) => {
@@ -324,7 +328,6 @@ const demoStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   content: {
     paddingBottom: 160,

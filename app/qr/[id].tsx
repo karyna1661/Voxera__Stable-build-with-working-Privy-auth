@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, TouchableOpacity, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, router } from 'expo-router';
 import { ArrowLeft } from 'lucide-react-native';
+import { GridBackground } from '@/components/GridBackground';
 import * as Linking from 'expo-linking';
 
 export default function QrScreen() {
@@ -11,14 +12,15 @@ export default function QrScreen() {
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=${encodeURIComponent(surveyUrl)}`;
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => router.back()} testID="qr-back">
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Scan to Respond</Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <GridBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={() => router.back()} testID="qr-back">
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Scan to Respond</Text>
+          <View style={styles.headerSpacer} />
+        </View>
 
       <View style={styles.content}>
         <Text style={styles.title}>Scan, Speak, Connect</Text>
@@ -34,14 +36,14 @@ export default function QrScreen() {
 • Record your voice response</Text>
         </View>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   header: {
     flexDirection: 'row',

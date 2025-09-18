@@ -5,6 +5,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { ArrowLeft, Mic, TrendingUp, ArrowUp, Repeat, X } from 'lucide-react-native';
 import { useSurvey, useResonanceInteraction } from '@/hooks/use-surveys';
 import { VoiceResponseCard } from '@/components/VoiceResponseCard';
+import { GridBackground } from '@/components/GridBackground';
 import { useAuth } from '@/providers/auth';
 
 export default function SurveyDetailScreen() {
@@ -57,36 +58,41 @@ export default function SurveyDetailScreen() {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loading}>
-          <Text style={styles.loadingText}>Loading survey...</Text>
-        </View>
-      </SafeAreaView>
+      <GridBackground>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.loading}>
+            <Text style={styles.loadingText}>Loading survey...</Text>
+          </View>
+        </SafeAreaView>
+      </GridBackground>
     );
   }
 
   if (!survey) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.error}>
-          <Text style={styles.errorText}>Survey not found</Text>
-          <TouchableOpacity style={styles.backButton} onPress={handleBack}>
-            <Text style={styles.backButtonText}>Go Back</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+      <GridBackground>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.error}>
+            <Text style={styles.errorText}>Survey not found</Text>
+            <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+              <Text style={styles.backButtonText}>Go Back</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      </GridBackground>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backIcon} onPress={handleBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Survey</Text>
-        <View style={styles.placeholder} />
-      </View>
+    <GridBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backIcon} onPress={handleBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Survey</Text>
+          <View style={styles.placeholder} />
+        </View>
 
       <ScrollView contentContainerStyle={styles.content}>
         <View style={styles.surveyCard}>
@@ -156,14 +162,14 @@ export default function SurveyDetailScreen() {
           )}
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   header: {
     flexDirection: 'row',

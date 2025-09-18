@@ -7,6 +7,7 @@ import { useAudioRecorder } from '@/hooks/use-audio-recorder';
 import { useAudioPlayer } from '@/hooks/use-audio-player';
 import { useSubmitResponse } from '@/hooks/use-surveys';
 import { useAuth } from '@/providers/auth';
+import { GridBackground } from '@/components/GridBackground';
 
 export default function RecordScreen() {
   const { surveyId } = useLocalSearchParams<{ surveyId?: string }>();
@@ -126,14 +127,15 @@ export default function RecordScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-          <X size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Record Response</Text>
-        <View style={styles.placeholder} />
-      </View>
+    <GridBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
+            <X size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Record Response</Text>
+          <View style={styles.placeholder} />
+        </View>
 
       <View style={styles.content}>
         {!isAuthenticated && (
@@ -257,14 +259,14 @@ export default function RecordScreen() {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   header: {
     flexDirection: 'row',

@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTrendingResponses } from '@/hooks/use-surveys';
 import { VoiceResponseCard } from '@/components/VoiceResponseCard';
 import { RecordButton } from '@/components/RecordButton';
+import { GridBackground } from '@/components/GridBackground';
 import { DemoVideo, VoiceResponse } from '@/types/survey';
 import { PrivySignInButton, useAuth } from '@/providers/auth';
 import { X, Play, MessageCircle, TrendingUp, Repeat } from 'lucide-react-native';
@@ -104,7 +105,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <GridBackground style={styles.container}>
       <FlatList
         data={feedItems}
         renderItem={renderFeedItem}
@@ -117,18 +118,20 @@ export default function HomeScreen() {
         refreshing={isLoading}
       />
       <RecordButton />
-    </View>
+    </GridBackground>
   );
 }
 
 // Demo Video Card Component
 function DemoVideoCard({ demo }: { demo: DemoVideo }) {
   const handlePress = () => {
-    router.push(`/demo/${demo.id}`);
+    // router.push(`/demo/${demo.id}`);
+    console.log('Demo pressed:', demo.id);
   };
 
   const handleFeedbackPress = () => {
-    router.push(`/vault/${demo.feedbackVaultId}`);
+    // router.push(`/vault/${demo.feedbackVaultId}`);
+    console.log('Feedback pressed:', demo.feedbackVaultId);
   };
 
   const formatDuration = (seconds: number) => {
@@ -389,7 +392,6 @@ const demoStyles = StyleSheet.create({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   content: {
     paddingBottom: 160,

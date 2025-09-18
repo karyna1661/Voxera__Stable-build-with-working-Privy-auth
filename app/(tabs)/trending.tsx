@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
 import { RecordButton } from '@/components/RecordButton';
+import { GridBackground } from '@/components/GridBackground';
 import { Survey } from '@/types/survey';
 import { PrivySignInButton } from '@/providers/auth';
 import { mockSurveys } from '@/mocks/surveys';
@@ -60,7 +61,7 @@ export default function TrendingScreen() {
   );
 
   return (
-    <View style={styles.container}>
+    <GridBackground style={styles.container}>
       <FlatList
         data={trendingSurveys}
         renderItem={renderSurveyItem}
@@ -73,14 +74,13 @@ export default function TrendingScreen() {
         refreshing={isLoading}
       />
       <RecordButton />
-    </View>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   content: {
     paddingBottom: 160,

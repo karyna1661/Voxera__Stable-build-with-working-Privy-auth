@@ -5,6 +5,7 @@ import { MessageCircle, TrendingUp, Settings, User, Plus, Calendar, Eye } from '
 import { router } from 'expo-router';
 import { useAuth, EthereumSignInButton } from '@/providers/auth';
 import { useUserSurveys } from '@/hooks/use-surveys';
+import { GridBackground } from '@/components/GridBackground';
 
 
 export default function ProfileScreen() {
@@ -74,7 +75,7 @@ export default function ProfileScreen() {
   ];
 
   return (
-    <View style={styles.container}>
+    <GridBackground style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={[styles.header, { paddingTop: insets.top + 32 }]}>
           {/* Top bar with Settings button */}
@@ -199,14 +200,13 @@ export default function ProfileScreen() {
           )}
         </View>
       </ScrollView>
-    </View>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   content: {
     paddingBottom: 120,

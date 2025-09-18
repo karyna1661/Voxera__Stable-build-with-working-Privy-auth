@@ -3,6 +3,7 @@ import { View, StyleSheet, ScrollView, Text, TouchableOpacity } from 'react-nati
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ChevronRight, Bell, Shield, Wallet, HelpCircle, LogOut } from 'lucide-react-native';
 import { EthereumSignInButton } from '@/providers/auth';
+import { GridBackground } from '@/components/GridBackground';
 
 export default function SettingsScreen() {
   const insets = useSafeAreaInsets();
@@ -34,7 +35,7 @@ export default function SettingsScreen() {
   ];
 
   return (
-    <View style={styles.container}>
+    <GridBackground style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
         <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
           {/* Top bar with Sign In button */}
@@ -76,14 +77,13 @@ export default function SettingsScreen() {
           <Text style={styles.copyright}>© 2025 Voice Survey Platform</Text>
         </View>
       </ScrollView>
-    </View>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
   },
   content: {
     paddingBottom: 32,

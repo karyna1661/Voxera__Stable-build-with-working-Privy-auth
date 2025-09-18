@@ -8,6 +8,7 @@ import { useAudioPlayer } from '@/hooks/use-audio-player';
 import { useCreateSurvey } from '@/hooks/use-surveys';
 import { useAuth } from '@/providers/auth';
 import { CreateSurveyRequest } from '@/types/survey';
+import { GridBackground } from '@/components/GridBackground';
 import * as Linking from 'expo-linking';
 
 type Category = 'Career & Business' | 'Technology' | 'Personal Growth' | 'Relationships' | 'Health & Wellness' | 'Education' | 'Society & Culture' | 'Other';
@@ -236,14 +237,15 @@ export default function CreateSurveyScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
-          <ArrowLeft size={24} color="#1f2937" />
-        </TouchableOpacity>
-        <Text style={styles.headerTitle}>Create Survey</Text>
-        <View style={styles.headerSpacer} />
-      </View>
+    <GridBackground>
+      <SafeAreaView style={styles.container} edges={['top']}>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
+            <ArrowLeft size={24} color="#1f2937" />
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>Create Survey</Text>
+          <View style={styles.headerSpacer} />
+        </View>
 
       <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
@@ -505,14 +507,14 @@ export default function CreateSurveyScreen() {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GridBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8fafc',
   },
   header: {
     flexDirection: 'row',
