@@ -70,13 +70,11 @@ export default function MarketScreen() {
 // Demo Video Card Component
 function DemoVideoCard({ demo }: { demo: DemoVideo }) {
   const handlePress = () => {
-    // router.push(`/demo/${demo.id}`);
-    console.log('Demo pressed:', demo.id);
+    router.push(`/demo/${demo.id}`);
   };
 
   const handleFeedbackPress = () => {
-    // router.push(`/vault/${demo.feedbackVaultId}`);
-    console.log('Feedback pressed:', demo.feedbackVaultId);
+    router.push(`/demo/${demo.id}`);
   };
 
   const formatDuration = (seconds: number) => {

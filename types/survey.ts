@@ -100,7 +100,7 @@ export interface VoiceResponse {
 export interface ResonanceInteraction {
   type: 'boost' | 'echo' | 'mute';
   targetId: string;
-  targetType: 'survey' | 'response';
+  targetType: 'survey' | 'response' | 'demo' | 'vault';
   userId: string;
 }
 
