@@ -68,6 +68,10 @@ export function SurveyCard({ survey }: SurveyCardProps) {
             <Text style={styles.timeAgo}>{formatTimeAgo(survey.createdAt)}</Text>
           </View>
         </View>
+        <View style={styles.resonanceScore}>
+          <TrendingUp size={14} color="#10b981" strokeWidth={1.5} />
+          <Text style={styles.scoreText}>{survey.resonanceScore}</Text>
+        </View>
       </View>
       
       <Text style={styles.title}>{survey.title}</Text>
@@ -103,11 +107,6 @@ export function SurveyCard({ survey }: SurveyCardProps) {
           >
             <X size={16} color="#6b7280" strokeWidth={1.5} />
           </TouchableOpacity>
-        </View>
-        
-        <View style={styles.resonanceScore}>
-          <TrendingUp size={14} color="#10b981" strokeWidth={1.5} />
-          <Text style={styles.scoreText}>{survey.resonanceScore}</Text>
         </View>
       </View>
     </TouchableOpacity>

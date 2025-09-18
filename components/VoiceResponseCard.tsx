@@ -114,33 +114,37 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         </TouchableOpacity>
       )}
 
-      <View style={styles.actions} testID="response-actions">
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => handleResonance('boost')}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
-          <Text style={styles.actionText}>{response.interactions.boosts}</Text>
-        </TouchableOpacity>
+      <View style={styles.footer}>
+        <View style={styles.responseCount}>
+          <MessageSquare size={16} color="#6366f1" strokeWidth={1.5} />
+          <Text style={styles.responseText}>{response.interactions.boosts + response.interactions.echoes} voice responses</Text>
+        </View>
+        
+        <View style={styles.actions} testID="response-actions">
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => handleResonance('boost')}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => handleResonance('echo')}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
-          <Text style={styles.actionText}>{response.interactions.echoes}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => handleResonance('echo')}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => handleResonance('mute')}
-          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-        >
-          <X size={16} color="#6b7280" strokeWidth={1.5} />
-          <Text style={styles.actionText}>{response.interactions.mutes}</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => handleResonance('mute')}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <X size={16} color="#6b7280" strokeWidth={1.5} />
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -262,28 +266,40 @@ const styles = StyleSheet.create({
     flex: 1,
     lineHeight: 18,
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#f3f4f6',
+    marginTop: 8,
+  },
+  responseCount: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  responseText: {
+    fontSize: 14,
+    color: '#6366f1',
+    fontWeight: '500',
+  },
   actions: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingTop: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
     gap: 8,
   },
   actionButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    width: 40,
+    height: 40,
     borderRadius: 12,
     backgroundColor: '#f8fafc',
+    justifyContent: 'center',
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    minWidth: 64,
-    flex: 1,
-    gap: 4,
   },
   actionText: {
     fontSize: 12,

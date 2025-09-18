@@ -161,8 +161,9 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
             <Text style={demoStyles.creatorName}>{demo.creator.name}</Text>
             <Text style={demoStyles.timestamp}>{new Date(demo.createdAt).toLocaleDateString()}</Text>
           </View>
-          <View style={demoStyles.categoryBadge}>
-            <Text style={demoStyles.categoryText}>{demo.category}</Text>
+          <View style={demoStyles.resonanceScore}>
+            <TrendingUp size={14} color="#10b981" strokeWidth={1.5} />
+            <Text style={demoStyles.resonanceText}>{demo.resonanceScore}</Text>
           </View>
         </View>
         
@@ -179,7 +180,7 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
         
         <View style={demoStyles.footer}>
           <TouchableOpacity style={demoStyles.feedbackButton} onPress={handleFeedbackPress}>
-            <MessageCircle size={16} color="#6366f1" />
+            <MessageCircle size={16} color="#6366f1" strokeWidth={1.5} />
             <Text style={demoStyles.feedbackText}>{demo.responseCount} voice responses</Text>
           </TouchableOpacity>
           
@@ -202,11 +203,6 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
             >
               <X size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-          </View>
-          
-          <View style={demoStyles.resonanceScore}>
-            <TrendingUp size={14} color="#10b981" />
-            <Text style={demoStyles.resonanceText}>{demo.resonanceScore}</Text>
           </View>
         </View>
       </View>
