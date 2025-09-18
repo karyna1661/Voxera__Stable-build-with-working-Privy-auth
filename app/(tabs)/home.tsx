@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, Image } from 'react-native';
+import { scale, spacing, fontScale, radius } from '@/lib/responsive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useTrendingResponses } from '@/hooks/use-surveys';
 import { VoiceResponseCard } from '@/components/VoiceResponseCard';
@@ -116,6 +117,10 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
         onRefresh={refetch}
         refreshing={isLoading}
+        removeClippedSubviews
+        windowSize={10}
+        initialNumToRender={6}
+        maxToRenderPerBatch={8}
       />
       <RecordButton />
     </GridBackground>
@@ -228,7 +233,7 @@ const demoStyles = StyleSheet.create({
   },
   videoContainer: {
     position: 'relative',
-    aspectRatio: 16 / 7.5,
+    aspectRatio: 16 / 9,
   },
   thumbnail: {
     width: '100%',
@@ -268,7 +273,7 @@ const demoStyles = StyleSheet.create({
     fontWeight: '600',
   },
   content: {
-    padding: 16,
+    padding: spacing(14),
   },
   header: {
     flexDirection: 'row',
@@ -276,10 +281,10 @@ const demoStyles = StyleSheet.create({
     marginBottom: 12,
   },
   avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    marginRight: 12,
+    width: scale(32),
+    height: scale(32),
+    borderRadius: radius(16),
+    marginRight: spacing(10),
   },
   creatorInfo: {
     flex: 1,
@@ -306,14 +311,14 @@ const demoStyles = StyleSheet.create({
     color: '#6b7280',
   },
   title: {
-    fontSize: 18,
+    fontSize: fontScale(18),
     fontWeight: '700',
     color: '#1f2937',
     marginBottom: 8,
     lineHeight: 24,
   },
   description: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: '#6b7280',
     lineHeight: 20,
     marginBottom: 12,
@@ -334,7 +339,7 @@ const demoStyles = StyleSheet.create({
     gap: 6,
   },
   feedbackText: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: '500',
     color: '#6366f1',
   },
@@ -342,12 +347,12 @@ const demoStyles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: spacing(12),
   },
   actionButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+    width: scale(42),
+    height: scale(42),
+    borderRadius: radius(12),
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
     alignItems: 'center',
@@ -364,7 +369,7 @@ const demoStyles = StyleSheet.create({
     gap: 4,
   },
   resonanceText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '600',
     color: '#10b981',
   },
@@ -372,18 +377,18 @@ const demoStyles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
-    marginBottom: 16,
+    marginBottom: spacing(12),
   },
   tag: {
     backgroundColor: '#f1f5f9',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingHorizontal: spacing(8),
+    paddingVertical: spacing(4),
+    borderRadius: radius(6),
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
   tagText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#64748b',
     fontWeight: '500',
   },
@@ -394,39 +399,39 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingBottom: 160,
+    paddingBottom: spacing(140),
   },
   header: {
-    paddingHorizontal: 32,
-    paddingBottom: 40,
+    paddingHorizontal: spacing(24),
+    paddingBottom: spacing(28),
   },
   title: {
-    fontSize: 36,
+    fontSize: fontScale(32),
     fontWeight: '800',
     color: '#0f172a',
     marginBottom: 8,
     letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 17,
+    fontSize: fontScale(16),
     color: '#64748b',
     fontWeight: '500',
     lineHeight: 24,
   },
   empty: {
     alignItems: 'center',
-    paddingTop: 120,
-    paddingHorizontal: 32,
+    paddingTop: spacing(100),
+    paddingHorizontal: spacing(24),
   },
   emptyText: {
-    fontSize: 20,
+    fontSize: fontScale(18),
     fontWeight: '700',
     color: '#334155',
     marginBottom: 12,
     textAlign: 'center',
   },
   emptySubtext: {
-    fontSize: 16,
+    fontSize: fontScale(14),
     color: '#64748b',
     textAlign: 'center',
     lineHeight: 24,
@@ -445,8 +450,8 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   welcomeSection: {
-    marginTop: 16,
-    padding: 16,
+    marginTop: spacing(12),
+    padding: spacing(12),
     backgroundColor: 'rgba(52, 211, 153, 0.1)',
     borderRadius: 12,
     borderLeftWidth: 4,
@@ -459,11 +464,11 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   dismissButton: {
-    padding: 6,
-    borderRadius: 8,
+    padding: spacing(6),
+    borderRadius: radius(8),
   },
   welcomeText: {
-    fontSize: 16,
+    fontSize: fontScale(16),
     fontWeight: '600',
     color: '#0f172a',
     flex: 1,

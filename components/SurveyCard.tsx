@@ -4,6 +4,7 @@ import { router } from 'expo-router';
 import { Survey } from '@/types/survey';
 import { MessageCircle, TrendingUp, Repeat, X } from 'lucide-react-native';
 import { useResonanceInteraction } from '@/hooks/use-surveys';
+import { scale, fontScale, spacing, radius } from '@/lib/responsive';
 
 interface SurveyCardProps {
   survey: Survey;
@@ -60,7 +61,7 @@ export function SurveyCard({ survey }: SurveyCardProps) {
       onPressOut={() => setIsPressed(false)}
       activeOpacity={1}
     >
-      <View style={styles.header}>
+      <View style={styles.header} testID="survey-card-header">
         <View style={styles.creatorInfo}>
           <Image source={{ uri: survey.creator.avatar }} style={styles.avatar} />
           <View style={styles.creatorText}>
@@ -87,7 +88,7 @@ export function SurveyCard({ survey }: SurveyCardProps) {
         </View>
       )}
       
-      <View style={styles.footer}>
+      <View style={styles.footer} testID="survey-card-footer">
         <TouchableOpacity style={styles.responseCount} onPress={(e) => {
           e.stopPropagation();
           router.push(`/survey/${survey.id}`);
@@ -129,10 +130,10 @@ export function SurveyCard({ survey }: SurveyCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 24,
-    marginHorizontal: 16,
-    marginVertical: 8,
+    borderRadius: radius(16),
+    padding: spacing(20),
+    marginHorizontal: spacing(12),
+    marginVertical: spacing(8),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: spacing(14),
   },
   creatorInfo: {
     flexDirection: 'row',
@@ -160,67 +161,67 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    marginRight: 12,
+    width: scale(32),
+    height: scale(32),
+    borderRadius: radius(16),
+    marginRight: spacing(10),
   },
   creatorText: {
     flex: 1,
   },
   creatorName: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     fontWeight: '600',
     color: '#1f2937',
-    marginBottom: 2,
+    marginBottom: spacing(2),
   },
   timeAgo: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#6b7280',
   },
   resonanceScore: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f0fdf4',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
+    paddingHorizontal: spacing(8),
+    paddingVertical: spacing(4),
+    borderRadius: radius(8),
     gap: 4,
   },
   scoreText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '600',
     color: '#10b981',
   },
   title: {
-    fontSize: 18,
+    fontSize: fontScale(18),
     fontWeight: '700',
     color: '#111827',
-    marginBottom: 8,
-    lineHeight: 24,
+    marginBottom: spacing(8),
+    lineHeight: fontScale(24),
   },
   question: {
-    fontSize: 15,
+    fontSize: fontScale(15),
     color: '#4b5563',
-    lineHeight: 22,
-    marginBottom: 12,
+    lineHeight: fontScale(22),
+    marginBottom: spacing(12),
   },
   tagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
-    marginBottom: 16,
+    marginBottom: spacing(12),
   },
   tag: {
     backgroundColor: '#f1f5f9',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 6,
+    paddingHorizontal: spacing(8),
+    paddingVertical: spacing(4),
+    borderRadius: radius(6),
     borderWidth: 1,
     borderColor: '#e2e8f0',
   },
   tagText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#64748b',
     fontWeight: '500',
   },
@@ -228,10 +229,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 8,
+    paddingTop: spacing(8),
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
-    marginTop: 8,
+    marginTop: spacing(8),
   },
   responseCount: {
     flexDirection: 'row',
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   responseText: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: '#6366f1',
     fontWeight: '500',
   },
@@ -247,12 +248,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: spacing(12),
   },
   actionButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+    width: scale(42),
+    height: scale(42),
+    borderRadius: radius(12),
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
     alignItems: 'center',

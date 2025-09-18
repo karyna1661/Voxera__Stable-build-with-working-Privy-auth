@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { scale, fontScale, spacing, radius } from '@/lib/responsive';
 import { VoiceResponse } from '@/types/survey';
 import { Play, Pause, TrendingUp, Repeat, X, MessageSquare } from 'lucide-react-native';
 import { useAudioPlayer } from '@/hooks/use-audio-player';
@@ -211,10 +212,10 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginHorizontal: 16,
-    marginVertical: 8,
+    borderRadius: radius(16),
+    padding: spacing(16),
+    marginHorizontal: spacing(12),
+    marginVertical: spacing(8),
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -237,10 +238,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   avatar: {
-    width: 28,
-    height: 28,
-    borderRadius: 14,
-    marginRight: 10,
+    width: scale(28),
+    height: scale(28),
+    borderRadius: radius(14),
+    marginRight: spacing(10),
   },
   userText: {
     flex: 1,
@@ -265,7 +266,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   scoreText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     fontWeight: '600',
     color: '#10b981',
   },
@@ -275,9 +276,9 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   playButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: scale(40),
+    height: scale(40),
+    borderRadius: radius(20),
     backgroundColor: '#1f2937',
     justifyContent: 'center',
     alignItems: 'center',
@@ -296,13 +297,13 @@ const styles = StyleSheet.create({
     height: 24,
   },
   waveformBar: {
-    width: 2,
+    width: scale(2),
     backgroundColor: '#d1d5db',
     marginRight: 2,
     borderRadius: 1,
   },
   duration: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#6b7280',
     fontWeight: '500',
     marginLeft: 12,
@@ -315,12 +316,12 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   transcriptText: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: '#374151',
     fontWeight: '500',
   },
   readMoreText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#6b7280',
     fontWeight: '400',
   },
@@ -328,13 +329,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#f8fafc',
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    marginBottom: 12,
+    paddingHorizontal: spacing(12),
+    paddingVertical: spacing(8),
+    borderRadius: radius(8),
+    marginBottom: spacing(12),
   },
   surveyLinkText: {
-    fontSize: 13,
+    fontSize: fontScale(13),
     color: '#475569',
     fontWeight: '500',
     marginLeft: 6,
@@ -345,7 +346,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 16,
+    paddingTop: spacing(14),
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
     marginTop: 8,
@@ -356,7 +357,7 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   responseText: {
-    fontSize: 14,
+    fontSize: fontScale(14),
     color: '#6366f1',
     fontWeight: '500',
   },
@@ -364,12 +365,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 16,
+    gap: spacing(12),
   },
   actionButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
+    width: scale(42),
+    height: scale(42),
+    borderRadius: radius(12),
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
     alignItems: 'center',
@@ -377,7 +378,7 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
   },
   actionText: {
-    fontSize: 12,
+    fontSize: fontScale(12),
     color: '#6b7280',
     fontWeight: '600',
   },

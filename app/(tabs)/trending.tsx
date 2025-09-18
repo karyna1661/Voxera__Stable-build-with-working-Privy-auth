@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, FlatList, Text } from 'react-native';
+import { spacing, fontScale } from '@/lib/responsive';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
@@ -61,6 +62,10 @@ export default function TrendingScreen() {
         showsVerticalScrollIndicator={false}
         onRefresh={refetch}
         refreshing={isLoading}
+        removeClippedSubviews
+        windowSize={10}
+        initialNumToRender={6}
+        maxToRenderPerBatch={8}
       />
       <RecordButton />
     </GridBackground>
@@ -72,39 +77,39 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    paddingBottom: 160,
+    paddingBottom: spacing(140),
   },
   header: {
-    paddingHorizontal: 32,
-    paddingBottom: 40,
+    paddingHorizontal: spacing(24),
+    paddingBottom: spacing(28),
   },
   title: {
-    fontSize: 36,
+    fontSize: fontScale(32),
     fontWeight: '800',
     color: '#0f172a',
     marginBottom: 8,
     letterSpacing: -0.5,
   },
   subtitle: {
-    fontSize: 17,
+    fontSize: fontScale(16),
     color: '#64748b',
     fontWeight: '500',
     lineHeight: 24,
   },
   empty: {
     alignItems: 'center',
-    paddingTop: 120,
-    paddingHorizontal: 32,
+    paddingTop: spacing(100),
+    paddingHorizontal: spacing(24),
   },
   emptyText: {
-    fontSize: 20,
+    fontSize: fontScale(18),
     fontWeight: '700',
     color: '#334155',
     marginBottom: 12,
     textAlign: 'center',
   },
   emptySubtext: {
-    fontSize: 16,
+    fontSize: fontScale(14),
     color: '#64748b',
     textAlign: 'center',
     lineHeight: 24,
