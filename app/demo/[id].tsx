@@ -95,7 +95,7 @@ export default function DemoDetailScreen() {
   return (
     <GridBackground>
       <SafeAreaView style={styles.container} edges={['top']}>
-        <ScrollView contentContainerStyle={styles.content}>
+        <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {/* Demo Header */}
           <View style={styles.pageHeader}>
             <Text style={styles.pageTitle}>Demo</Text>

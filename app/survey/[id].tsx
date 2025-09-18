@@ -94,7 +94,7 @@ export default function SurveyDetailScreen() {
           <View style={styles.placeholder} />
         </View>
 
-      <ScrollView contentContainerStyle={styles.content}>
+      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.surveyCard}>
           <View style={styles.surveyHeader}>
             <View style={styles.creatorInfo}>
