@@ -136,14 +136,7 @@ export default function DemoDetailScreen() {
             <Text style={styles.title}>{demo.title}</Text>
             <Text style={styles.description}>{demo.description}</Text>
             
-            {/* Tags */}
-            <View style={styles.tags}>
-              {demo.tags.map((tag: string, index: number) => (
-                <View key={`${demo.id}-tag-${tag}`} style={styles.tag}>
-                  <Text style={styles.tagText}>{tag}</Text>
-                </View>
-              ))}
-            </View>
+
             
             {/* Actions */}
             <View style={styles.actions}>
@@ -180,7 +173,7 @@ export default function DemoDetailScreen() {
 
           <View style={styles.responsesSection}>
             <TouchableOpacity style={styles.responsesHeader} onPress={() => {
-              console.log('Navigate to all responses for demo:', demo.id);
+              router.push(`/demo/${demo.id}`);
             }}>
               <Text style={styles.responsesTitle}>
                 Responses ({responses.length})
@@ -272,7 +265,7 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     position: 'relative',
-    aspectRatio: 16 / 9,
+    aspectRatio: 16 / 8,
   },
   thumbnail: {
     width: '100%',
@@ -373,24 +366,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     paddingHorizontal: 32,
   },
-  tags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingHorizontal: 32,
-    marginBottom: 32,
-    gap: 8,
-  },
-  tag: {
-    backgroundColor: '#ede9fe',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-  },
-  tagText: {
-    fontSize: 13,
-    fontWeight: '500',
-    color: '#7c3aed',
-  },
+
   actions: {
     flexDirection: 'row',
     justifyContent: 'center',

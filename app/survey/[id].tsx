@@ -147,7 +147,7 @@ export default function SurveyDetailScreen() {
 
         <View style={styles.responsesSection}>
           <TouchableOpacity style={styles.responsesHeader} onPress={() => {
-            console.log('Navigate to all responses for survey:', survey.id);
+            router.push(`/survey/${survey.id}`);
           }}>
             <Text style={styles.responsesTitle}>
               Responses ({survey.responses.length})

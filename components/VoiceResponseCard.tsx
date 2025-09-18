@@ -6,7 +6,7 @@ import { useAudioPlayer } from '@/hooks/use-audio-player';
 import { useResonanceInteraction } from '@/hooks/use-surveys';
 import { router } from 'expo-router';
 import { useAuth } from '@/providers/auth';
-import { mockSurveys, mockDemoVideos, mockFeedbackVaults } from '@/mocks/surveys';
+import { mockSurveys, mockDemoVideos, mockFeedbackVaults, mockVoiceResponses } from '@/mocks/surveys';
 
 interface VoiceResponseCardProps {
   response: VoiceResponse;
@@ -163,10 +163,20 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
       )}
 
       <View style={styles.footer}>
-        <View style={styles.responseCount}>
+        <TouchableOpacity style={styles.responseCount} onPress={() => {
+          // Navigate to nested responses or show response detail
+          const nestedResponses = mockVoiceResponses.filter(r => r.parentResponseId === response.id);
+          if (nestedResponses.length > 0) {
+            console.log(`Navigate to ${nestedResponses.length} nested responses for response:`, response.id);
+            // In a real app, this would navigate to a response detail page showing nested responses
+          } else {
+            console.log('No nested responses, could open record response modal');
+            // Could open a modal to record a response to this response
+          }
+        }}>
           <MessageSquare size={16} color="#6366f1" strokeWidth={1.5} />
-          <Text style={styles.responseText}>{response.interactions.boosts + response.interactions.echoes} voice responses</Text>
-        </View>
+          <Text style={styles.responseText}>{mockVoiceResponses.filter(r => r.parentResponseId === response.id).length || response.interactions.boosts + response.interactions.echoes} voice responses</Text>
+        </TouchableOpacity>
         
         <View style={styles.actions} testID="response-actions">
           <TouchableOpacity

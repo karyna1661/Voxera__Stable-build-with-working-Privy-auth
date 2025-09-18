@@ -333,6 +333,44 @@ export const mockVoiceResponses: VoiceResponse[] = [
     type: 'audio'
   },
   {
+    id: 'response-1-1',
+    vaultId: 'vault-demo-1',
+    surveyId: '1',
+    parentResponseId: 'response-1', // This is a response to response-1
+    userId: '3',
+    user: mockUsers[2],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 32,
+    transcript: 'I agree! Have you tried it with TypeScript projects? The type checking integration is amazing.',
+    createdAt: '2024-01-15T12:30:00Z',
+    resonanceScore: 45,
+    interactions: {
+      boosts: 8,
+      echoes: 2,
+      mutes: 0
+    },
+    type: 'audio'
+  },
+  {
+    id: 'response-1-1-1',
+    vaultId: 'vault-demo-1',
+    surveyId: '1',
+    parentResponseId: 'response-1-1', // This is a response to response-1-1 (2nd level nesting)
+    userId: '4',
+    user: mockUsers[3],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 28,
+    transcript: 'Yes! The TypeScript integration caught so many potential bugs in our codebase.',
+    createdAt: '2024-01-15T13:45:00Z',
+    resonanceScore: 23,
+    interactions: {
+      boosts: 5,
+      echoes: 1,
+      mutes: 0
+    },
+    type: 'audio'
+  },
+  {
     id: 'response-2',
     vaultId: 'vault-demo-2',
     surveyId: '2', // Link to Farcaster vs Twitter survey
@@ -347,6 +385,25 @@ export const mockVoiceResponses: VoiceResponse[] = [
       boosts: 15,
       echoes: 5,
       mutes: 1
+    },
+    type: 'audio'
+  },
+  {
+    id: 'response-2-1',
+    vaultId: 'vault-demo-2',
+    surveyId: '2',
+    parentResponseId: 'response-2',
+    userId: '1',
+    user: mockUsers[0],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 41,
+    transcript: 'Absolutely! The transparency in supply chain tracking could revolutionize the industry.',
+    createdAt: '2024-01-14T17:15:00Z',
+    resonanceScore: 67,
+    interactions: {
+      boosts: 11,
+      echoes: 4,
+      mutes: 0
     },
     type: 'audio'
   },
@@ -369,6 +426,44 @@ export const mockVoiceResponses: VoiceResponse[] = [
     type: 'audio'
   },
   {
+    id: 'response-3-1',
+    vaultId: 'vault-demo-3',
+    surveyId: '3',
+    parentResponseId: 'response-3',
+    userId: '5',
+    user: mockUsers[4],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 35,
+    transcript: 'The AI-powered mood tracking feature looks particularly innovative. Great work!',
+    createdAt: '2024-01-13T11:20:00Z',
+    resonanceScore: 54,
+    interactions: {
+      boosts: 9,
+      echoes: 3,
+      mutes: 0
+    },
+    type: 'audio'
+  },
+  {
+    id: 'response-3-1-1',
+    vaultId: 'vault-demo-3',
+    surveyId: '3',
+    parentResponseId: 'response-3-1',
+    userId: '2',
+    user: mockUsers[1],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 29,
+    transcript: 'I wonder how it handles privacy concerns with such sensitive data?',
+    createdAt: '2024-01-13T12:10:00Z',
+    resonanceScore: 31,
+    interactions: {
+      boosts: 6,
+      echoes: 2,
+      mutes: 0
+    },
+    type: 'audio'
+  },
+  {
     id: 'response-4',
     vaultId: 'vault-external-1',
     surveyId: '4', // Link to Onchain Social Future survey
@@ -382,6 +477,25 @@ export const mockVoiceResponses: VoiceResponse[] = [
     interactions: {
       boosts: 9,
       echoes: 2,
+      mutes: 0
+    },
+    type: 'audio'
+  },
+  {
+    id: 'response-4-1',
+    vaultId: 'vault-external-1',
+    surveyId: '4',
+    parentResponseId: 'response-4',
+    userId: '1',
+    user: mockUsers[0],
+    audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+    duration: 37,
+    transcript: 'The part about AI ethics was especially relevant. We need more discussions like this.',
+    createdAt: '2024-01-12T16:05:00Z',
+    resonanceScore: 42,
+    interactions: {
+      boosts: 7,
+      echoes: 1,
       mutes: 0
     },
     type: 'audio'
@@ -424,6 +538,29 @@ export const mockSurveys: Survey[] = [
           boosts: 12,
           echoes: 8,
           mutes: 1,
+        },
+      },
+      {
+        id: 'resp1-1',
+        vaultId: 'vault-legacy-1',
+        surveyId: '1',
+        parentResponseId: 'resp1',
+        userId: 'user9',
+        user: {
+          id: 'user9',
+          name: 'Chris Evans',
+          avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+        },
+        audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+        type: 'audio' as const,
+        duration: 38000,
+        transcript: 'Totally agree! Even simple things like connecting a wallet can be overwhelming for newcomers.',
+        createdAt: '2025-01-13T11:45:00Z',
+        resonanceScore: 18,
+        interactions: {
+          boosts: 9,
+          echoes: 5,
+          mutes: 0,
         },
       },
       {

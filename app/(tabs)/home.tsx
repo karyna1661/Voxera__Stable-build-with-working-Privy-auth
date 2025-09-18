@@ -125,13 +125,11 @@ export default function HomeScreen() {
 // Demo Video Card Component
 function DemoVideoCard({ demo }: { demo: DemoVideo }) {
   const handlePress = () => {
-    // router.push(`/demo/${demo.id}`);
-    console.log('Demo pressed:', demo.id);
+    router.push(`/demo/${demo.id}`);
   };
 
   const handleFeedbackPress = () => {
-    // router.push(`/vault/${demo.feedbackVaultId}`);
-    console.log('Feedback pressed:', demo.feedbackVaultId);
+    router.push(`/demo/${demo.id}`);
   };
 
   const formatDuration = (seconds: number) => {
@@ -170,13 +168,7 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
         <Text style={demoStyles.title}>{demo.title}</Text>
         <Text style={demoStyles.description} numberOfLines={2}>{demo.description}</Text>
         
-        <View style={demoStyles.tags}>
-          {demo.tags.slice(0, 3).map((tag: string, index: number) => (
-            <View key={`${demo.id}-tag-${tag}`} style={demoStyles.tag}>
-              <Text style={demoStyles.tagText}>{tag}</Text>
-            </View>
-          ))}
-        </View>
+
         
         <View style={demoStyles.footer}>
           <TouchableOpacity style={demoStyles.feedbackButton} onPress={handleFeedbackPress}>
@@ -228,7 +220,7 @@ const demoStyles = StyleSheet.create({
   },
   videoContainer: {
     position: 'relative',
-    aspectRatio: 16 / 8.5,
+    aspectRatio: 16 / 7.5,
   },
   thumbnail: {
     width: '100%',
@@ -318,23 +310,7 @@ const demoStyles = StyleSheet.create({
     lineHeight: 20,
     marginBottom: 12,
   },
-  tags: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 8,
-    gap: 8,
-  },
-  tag: {
-    backgroundColor: '#ede9fe',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 8,
-  },
-  tagText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#7c3aed',
-  },
+
   footer: {
     flexDirection: 'row',
     alignItems: 'center',

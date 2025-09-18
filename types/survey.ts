@@ -75,6 +75,7 @@ export interface VoiceResponse {
   id: string;
   vaultId: string; // Changed from surveyId to vaultId
   surveyId?: string; // Keep for backward compatibility
+  parentResponseId?: string; // For nested responses
   userId: string;
   user: {
     id: string;
