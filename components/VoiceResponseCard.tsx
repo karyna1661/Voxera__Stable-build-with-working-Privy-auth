@@ -118,24 +118,27 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => handleResonance('boost')}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <TrendingUp size={16} color="#6b7280" />
+          <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
           <Text style={styles.actionText}>{response.interactions.boosts}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => handleResonance('echo')}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <Repeat size={16} color="#6b7280" />
+          <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
           <Text style={styles.actionText}>{response.interactions.echoes}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={styles.actionButton}
           onPress={() => handleResonance('mute')}
+          hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
         >
-          <X size={16} color="#6b7280" />
+          <X size={16} color="#6b7280" strokeWidth={1.5} />
           <Text style={styles.actionText}>{response.interactions.mutes}</Text>
         </TouchableOpacity>
       </View>
@@ -267,26 +270,25 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     borderTopWidth: 1,
     borderTopColor: '#f3f4f6',
-    paddingHorizontal: 8,
+    gap: 8,
   },
   actionButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
     borderRadius: 12,
     backgroundColor: '#f8fafc',
     borderWidth: 1,
     borderColor: '#e2e8f0',
-    minWidth: 72,
+    minWidth: 64,
     flex: 1,
-    marginHorizontal: 4,
+    gap: 4,
   },
   actionText: {
-    fontSize: 13,
+    fontSize: 12,
     color: '#6b7280',
-    marginLeft: 6,
     fontWeight: '600',
   },
 });

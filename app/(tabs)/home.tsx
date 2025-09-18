@@ -17,7 +17,7 @@ type FeedItem = {
 };
 
 export default function HomeScreen() {
-  const { data: responses, isLoading, refetch } = useTrendingResponses();
+  const { isLoading, refetch } = useTrendingResponses();
   const insets = useSafeAreaInsets();
 
   // Combine demo videos and voice responses for the feed
@@ -181,13 +181,22 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
           </TouchableOpacity>
           
           <View style={demoStyles.actions}>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <X size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
           </View>
@@ -352,9 +361,9 @@ const demoStyles = StyleSheet.create({
     gap: 8,
   },
   actionButton: {
-    width: 36,
-    height: 36,
-    borderRadius: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 12,
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
     alignItems: 'center',

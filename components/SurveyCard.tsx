@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Animated } from 'react-native';
 import { router } from 'expo-router';
 import { Survey } from '@/types/survey';
-import { MessageCircle, TrendingUp, ArrowUp, Repeat, X } from 'lucide-react-native';
+import { MessageCircle, TrendingUp, Repeat, X } from 'lucide-react-native';
 import { useResonanceInteraction } from '@/hooks/use-surveys';
 
 interface SurveyCardProps {
@@ -84,15 +84,13 @@ export function SurveyCard({ survey }: SurveyCardProps) {
         </View>
         
         <View style={styles.actions} testID="survey-actions">
-          <Animated.View style={styles.animatedAction}>
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={(e) => handleResonance('boost', e)}
-              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
-            >
-              <ArrowUp size={16} color="#6b7280" strokeWidth={1.5} />
-            </TouchableOpacity>
-          </Animated.View>
+          <TouchableOpacity
+            style={styles.actionButton}
+            onPress={(e) => handleResonance('boost', e)}
+            hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+          >
+            <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.actionButton}
@@ -215,13 +213,9 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     gap: 8,
   },
-  animatedAction: {
-    transform: [{ scale: 1 }],
-    flex: 1,
-  },
   actionButton: {
-    width: '100%',
-    height: 44,
+    width: 40,
+    height: 40,
     borderRadius: 12,
     backgroundColor: '#f8fafc',
     justifyContent: 'center',
