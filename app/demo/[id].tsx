@@ -229,8 +229,8 @@ const styles = StyleSheet.create({
   },
   demoCard: {
     backgroundColor: '#ffffff',
-    marginHorizontal: spacing(16),
-    marginVertical: spacing(12),
+    marginHorizontal: spacing(12),
+    marginVertical: spacing(8),
     borderRadius: radius(16),
     overflow: 'hidden',
     shadowColor: '#000',
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#111827',
-    marginHorizontal: spacing(16),
+    marginHorizontal: spacing(12),
     paddingVertical: spacing(14),
     borderRadius: radius(12),
     marginBottom: spacing(28),
@@ -408,7 +408,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: spacing(16),
+    paddingHorizontal: spacing(12),
     marginBottom: spacing(14),
   },
   responsesTitle: {
@@ -438,7 +438,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   pageHeader: {
-    paddingHorizontal: spacing(20),
+    paddingHorizontal: spacing(12),
     paddingTop: spacing(14),
     paddingBottom: spacing(8),
   },

@@ -234,8 +234,8 @@ const styles = StyleSheet.create({
   },
   surveyCard: {
     backgroundColor: '#ffffff',
-    marginHorizontal: 16,
-    marginVertical: 12,
+    marginHorizontal: 12,
+    marginVertical: 8,
     borderRadius: 16,
     padding: 16,
     shadowColor: '#000',
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#111827',
-    marginHorizontal: 16,
+    marginHorizontal: 12,
     paddingVertical: 14,
     borderRadius: 12,
     marginBottom: 28,
@@ -366,7 +366,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    paddingHorizontal: 12,
     marginBottom: 14,
   },
   responsesTitle: {

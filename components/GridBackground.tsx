@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { View, StyleSheet, useWindowDimensions, Platform } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
@@ -17,6 +17,8 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
   const vCount = Math.ceil(width / vGap);
   const hCount = Math.ceil(height / hGap);
 
+  const [shaderFailed, setShaderFailed] = useState<boolean>(false);
+
   const animatedUrl = useMemo(() => {
     const fallback = 'https://images.shadergradient.co/4f3b9e1f-animated.gif';
     return (
@@ -25,7 +27,7 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
     ) || fallback;
   }, [shaderUrl]);
 
-  const useShader = mode === 'shader' && Platform.select({ web: true, default: true });
+  const useShader = mode === 'shader' && !shaderFailed && Platform.select({ web: true, default: true });
 
   return (
     <View style={[styles.container, style]} testID="grid-background">
@@ -38,11 +40,12 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
           testID="shader-background"
           onError={(_e) => {
             console.warn('Shader background failed to load, falling back to gradient');
+            setShaderFailed(true);
           }}
         />
       ) : (
         <LinearGradient
-          colors={['#052e26', '#064e3b', '#065f46']}
+          colors={['#0b1120', '#0b1120', '#0b1120']}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.background}
@@ -68,7 +71,7 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, position: 'relative', backgroundColor: '#052e26' },
+  container: { flex: 1, position: 'relative', backgroundColor: '#0b1120' },
   background: { ...StyleSheet.absoluteFillObject },
   linesContainer: { ...StyleSheet.absoluteFillObject },
   horizontalLines: { ...StyleSheet.absoluteFillObject },
@@ -78,14 +81,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
   },
   vLine: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: 1,
-    backgroundColor: 'rgba(16, 185, 129, 0.12)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
   },
   content: { flex: 1, position: 'relative', zIndex: 2 },
 });
