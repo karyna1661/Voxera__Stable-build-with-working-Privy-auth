@@ -1,31 +1,15 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { PrivyProvider, usePrivy, useLogin } from '@privy-io/react-auth';
-import Constants from 'expo-constants';
-import * as Linking from 'expo-linking';
+
+
+
 import createContextHook from '@nkzw/create-context-hook';
 import { AuthState, User } from '@/types/survey';
 import { apiService } from '@/services/api';
 import { useAuthStorage } from '@/providers/storage';
-import { farcasterService } from '@/services/farcaster';
 
-// Privy configuration
-const getPrivyAppId = (): string => {
-  const extra = (Constants?.expoConfig?.extra ?? {}) as Record<string, unknown>;
-  const envAppId = (extra.EXPO_PUBLIC_PRIVY_APP_ID as string | undefined) ?? (process.env.EXPO_PUBLIC_PRIVY_APP_ID as string | undefined);
-  return envAppId ?? 'cmf6o0wqr01j7jo0c2f1qfufc';
-};
 
-const getRedirectUri = (): string => {
-  try {
-    const url = Linking.createURL('auth');
-    console.log('[Auth] redirectUri', url);
-    return url;
-  } catch (e) {
-    console.warn('[Auth] Failed to build redirect URI, falling back to custom scheme');
-    return 'myapp://auth';
-  }
-};
+
 
 // Enhanced authentication context with Privy integration
 const [AuthContextProvider, useAuthContext] = createContextHook(() => {
@@ -37,8 +21,7 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
   });
 
   const authStorage = useAuthStorage();
-  const { user: privyUser, authenticated, ready, logout } = usePrivy();
-  const { login } = useLogin();
+  const ready = true;
 
   const clearAuth = useCallback(async () => {
     try {
@@ -106,191 +89,59 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
     }
   }, [authStorage]);
 
-  // Convert Privy user to our User type
-  const convertPrivyUser = useCallback(async (rawPrivyUser: any): Promise<User> => {
-    try {
-      console.log('[Auth] Raw Privy user', JSON.stringify(rawPrivyUser ?? {}, null, 2));
-    } catch {}
 
-    const linked = Array.isArray(rawPrivyUser?.linkedAccounts) ? rawPrivyUser.linkedAccounts : [];
-
-    const walletFromRoot = rawPrivyUser?.wallet?.address as string | undefined;
-    const walletFromArray = linked.find((acc: any) => acc?.type === 'wallet')?.address as string | undefined;
-    const walletFromWallets = Array.isArray(rawPrivyUser?.wallets) ? (rawPrivyUser.wallets[0]?.address as string | undefined) : undefined;
-
-    const walletAddress = (walletFromRoot || walletFromArray || walletFromWallets)?.toLowerCase();
-
-    if (!walletAddress) {
-      throw new Error('No wallet address found');
-    }
-
-    const walletClientTypeRaw = (rawPrivyUser?.wallet?.walletClientType as string | undefined)
-      ?? (linked.find((acc: any) => acc?.type === 'wallet')?.walletClientType as string | undefined);
-
-    const toWalletType = (t?: string): User['walletType'] => {
-      const x = (t ?? '').toLowerCase();
-      if (x.includes('metamask')) return 'metamask';
-      if (x.includes('coinbase')) return 'coinbase';
-      if (x.includes('walletconnect') || x.includes('wc')) return 'walletconnect';
-      if (x.includes('farcaster')) return 'farcaster';
-      if (x.includes('email')) return 'email';
-      return undefined;
-    };
-
-    const walletClientType = toWalletType(walletClientTypeRaw);
-
-    const farcasterAccount: any | undefined = linked.find((acc: any) => acc?.type === 'farcaster');
-
-    let fc = undefined as
-      | {
-          fid?: number;
-          username?: string;
-          displayName?: string;
-          bio?: string;
-          pfpUrl?: string;
-          followerCount?: number;
-          followingCount?: number;
-        }
-      | undefined;
-
-    if (farcasterAccount) {
-      const profile = (farcasterAccount.profile ?? farcasterAccount) as Record<string, any>;
-      fc = {
-        fid: (farcasterAccount.fid as number | undefined) ?? (profile.fid as number | undefined),
-        username: (farcasterAccount.username as string | undefined) ?? (profile.username as string | undefined),
-        displayName: (profile.displayName as string | undefined) ?? (profile.display_name as string | undefined),
-        bio: (profile.bio?.text as string | undefined) ?? (profile.bio as string | undefined),
-        pfpUrl: (profile.pfp?.url as string | undefined) ?? (profile.pfpUrl as string | undefined) ?? (profile.pfp_url as string | undefined),
-        followerCount: (profile.followerCount as number | undefined) ?? (profile.follower_count as number | undefined),
-        followingCount: (profile.followingCount as number | undefined) ?? (profile.following_count as number | undefined),
-      };
-
-      if ((!fc.username || !fc.displayName || !fc.pfpUrl) && typeof farcasterAccount.fid === 'number') {
-        try {
-          const neynar = await farcasterService.getUserByFid(farcasterAccount.fid as number);
-          if (neynar) {
-            fc = {
-              fid: neynar.fid,
-              username: neynar.username ?? fc.username,
-              displayName: neynar.display_name ?? fc.displayName,
-              bio: neynar.bio ?? fc.bio,
-              pfpUrl: neynar.pfp_url ?? fc.pfpUrl,
-              followerCount: neynar.follower_count ?? fc.followerCount,
-              followingCount: neynar.following_count ?? fc.followingCount,
-            };
-          }
-        } catch (err) {
-          console.warn('[Auth] Neynar fallback failed, continuing without Farcaster enrichment');
-        }
-      }
-    }
-
-    const user: User = {
-      id: String(rawPrivyUser?.id ?? walletAddress),
-      address: walletAddress,
-      createdAt: (rawPrivyUser?.createdAt as string | undefined) ?? new Date().toISOString(),
-      walletType: walletClientType,
-      name:
-        (fc?.displayName && fc.displayName.trim().length > 0 ? fc.displayName : undefined)
-        ?? (rawPrivyUser?.email?.address as string | undefined)
-        ?? `User ${walletAddress.slice(0, 6)}`,
-      email: rawPrivyUser?.email?.address as string | undefined,
-      farcaster: fc
-        ? {
-            fid: (fc.fid ?? 0) as number,
-            username: (fc.username ?? '') as string,
-            displayName: (fc.displayName ?? '') as string,
-            bio: fc.bio,
-            pfpUrl: fc.pfpUrl,
-            followerCount: (fc.followerCount ?? 0) as number,
-            followingCount: (fc.followingCount ?? 0) as number,
-          }
-        : undefined,
-    };
-
-    return user;
-  }, []);
 
   // Handle Privy authentication state changes
   useEffect(() => {
-    if (!ready) return;
-
-    const handlePrivyAuth = async () => {
-      if (authenticated && privyUser) {
-        try {
-          setAuthState(prev => ({ ...prev, isLoading: true }));
-          const user = await convertPrivyUser(privyUser);
-          const token = `privy_${user.id}_${Date.now()}`;
-          await saveAuth(token, user);
-        } catch (error) {
-          console.error('Failed to process Privy user:', error);
-          setAuthState(prev => ({ ...prev, isLoading: false }));
-        }
-      } else {
-        await clearAuth();
-      }
-    };
-
-    handlePrivyAuth();
-  }, [ready, authenticated, privyUser, convertPrivyUser, saveAuth, clearAuth]);
+    loadStoredAuth();
+  }, [loadStoredAuth]);
 
   // Load stored auth on mount
-  useEffect(() => {
-    if (ready && !authenticated) {
-      loadStoredAuth();
-    }
-  }, [ready, authenticated, loadStoredAuth]);
+
 
   const signIn = useCallback(async () => {
     try {
       setAuthState(prev => ({ ...prev, isLoading: true }));
-      await login();
+      const now = Date.now();
+      const user: User = {
+        id: `guest_${now}`,
+        address: `0x${now.toString(16).padStart(8, '0')}`,
+        name: `Guest ${String(now).slice(-4)}`,
+        createdAt: new Date().toISOString(),
+      };
+      const token = `guest_${now}`;
+      await saveAuth(token, user);
     } catch (error) {
       console.error('Failed to sign in:', error);
       setAuthState(prev => ({ ...prev, isLoading: false }));
       throw error;
     }
-  }, [login]);
+  }, [saveAuth]);
 
   const signOut = useCallback(async () => {
     try {
-      await logout();
       await clearAuth();
     } catch (error) {
       console.error('Failed to sign out:', error);
-      await clearAuth(); // Fallback to clear local auth
+      await clearAuth();
     }
-  }, [logout, clearAuth]);
+  }, [clearAuth]);
 
   return useMemo(() => ({
     ...authState,
     signIn,
     signOut,
     saveAuth,
-    isLoading: authState.isLoading || !ready,
-  }), [authState, signIn, signOut, saveAuth, ready]);
+    isLoading: authState.isLoading,
+  }), [authState, signIn, signOut, saveAuth]);
 });
 
 // Authentication provider with Privy integration
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
-    <PrivyProvider
-      appId={getPrivyAppId()}
-      config={{
-        loginMethods: ['wallet', 'email', 'farcaster'],
-        appearance: {
-          theme: 'light',
-          accentColor: '#000000',
-        },
-        embeddedWallets: {
-          createOnLogin: 'users-without-wallets',
-        },
-      }}
-    >
-      <AuthContextProvider>
-        {children}
-      </AuthContextProvider>
-    </PrivyProvider>
+    <AuthContextProvider>
+      {children}
+    </AuthContextProvider>
   );
 }
 
