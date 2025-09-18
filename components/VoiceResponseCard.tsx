@@ -148,6 +148,11 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         </View>
       </View>
 
+      <TouchableOpacity style={styles.transcriptSection}>
+        <Text style={styles.transcriptText}>Show Transcript</Text>
+        <Text style={styles.readMoreText}>read more</Text>
+      </TouchableOpacity>
+
       {showSurveyLink && originalContent && (
         <TouchableOpacity style={styles.surveyLink} onPress={handleSurveyPress}>
           <MessageSquare size={14} color="#6b7280" />
@@ -257,7 +262,7 @@ const styles = StyleSheet.create({
   audioSection: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   playButton: {
     width: 40,
@@ -291,6 +296,23 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     fontWeight: '500',
     marginLeft: 12,
+  },
+  transcriptSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+    paddingVertical: 4,
+  },
+  transcriptText: {
+    fontSize: 14,
+    color: '#374151',
+    fontWeight: '500',
+  },
+  readMoreText: {
+    fontSize: 12,
+    color: '#6b7280',
+    fontWeight: '400',
   },
   surveyLink: {
     flexDirection: 'row',
