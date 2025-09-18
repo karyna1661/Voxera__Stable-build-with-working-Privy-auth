@@ -106,8 +106,9 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
             <Text style={demoStyles.creatorName}>{demo.creator.name}</Text>
             <Text style={demoStyles.timestamp}>{new Date(demo.createdAt).toLocaleDateString()}</Text>
           </View>
-          <View style={demoStyles.categoryBadge}>
-            <Text style={demoStyles.categoryText}>{demo.category}</Text>
+          <View style={demoStyles.resonanceScore}>
+            <TrendingUp size={14} color="#10b981" strokeWidth={1.5} />
+            <Text style={demoStyles.resonanceText}>{demo.resonanceScore}</Text>
           </View>
         </View>
         
@@ -124,25 +125,29 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
         
         <View style={demoStyles.footer}>
           <TouchableOpacity style={demoStyles.feedbackButton} onPress={handleFeedbackPress}>
-            <MessageCircle size={16} color="#6366f1" />
+            <MessageCircle size={16} color="#6366f1" strokeWidth={1.5} />
             <Text style={demoStyles.feedbackText}>{demo.responseCount} voice responses</Text>
           </TouchableOpacity>
           
           <View style={demoStyles.actions}>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <TrendingUp size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <Repeat size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-            <TouchableOpacity style={demoStyles.actionButton}>
+            <TouchableOpacity 
+              style={demoStyles.actionButton}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <X size={16} color="#6b7280" strokeWidth={1.5} />
             </TouchableOpacity>
-          </View>
-          
-          <View style={demoStyles.resonanceScore}>
-            <TrendingUp size={14} color="#10b981" />
-            <Text style={demoStyles.resonanceText}>{demo.resonanceScore}</Text>
           </View>
         </View>
       </View>
@@ -234,17 +239,7 @@ const demoStyles = StyleSheet.create({
     color: '#6b7280',
     marginTop: 2,
   },
-  categoryBadge: {
-    backgroundColor: '#f3f4f6',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
-  },
-  categoryText: {
-    fontSize: 12,
-    fontWeight: '500',
-    color: '#6b7280',
-  },
+
   title: {
     fontSize: 18,
     fontWeight: '700',
@@ -324,6 +319,7 @@ const demoStyles = StyleSheet.create({
     fontWeight: '600',
     color: '#10b981',
   },
+
 });
 
 const styles = StyleSheet.create({
