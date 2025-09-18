@@ -68,10 +68,6 @@ export function SurveyCard({ survey }: SurveyCardProps) {
             <Text style={styles.timeAgo}>{formatTimeAgo(survey.createdAt)}</Text>
           </View>
         </View>
-        <View style={styles.resonanceScore}>
-          <TrendingUp size={14} color="#9ca3af" strokeWidth={1.5} />
-          <Text style={styles.scoreText}>{survey.resonanceScore}</Text>
-        </View>
       </View>
       
       <Text style={styles.title}>{survey.title}</Text>
@@ -79,8 +75,8 @@ export function SurveyCard({ survey }: SurveyCardProps) {
       
       <View style={styles.footer}>
         <View style={styles.responseCount}>
-          <MessageCircle size={14} color="#9ca3af" strokeWidth={1.5} />
-          <Text style={styles.responseText}>{survey.responseCount}</Text>
+          <MessageCircle size={16} color="#6366f1" strokeWidth={1.5} />
+          <Text style={styles.responseText}>{survey.responseCount} voice responses</Text>
         </View>
         
         <View style={styles.actions} testID="survey-actions">
@@ -108,6 +104,11 @@ export function SurveyCard({ survey }: SurveyCardProps) {
             <X size={16} color="#6b7280" strokeWidth={1.5} />
           </TouchableOpacity>
         </View>
+        
+        <View style={styles.resonanceScore}>
+          <TrendingUp size={14} color="#10b981" strokeWidth={1.5} />
+          <Text style={styles.scoreText}>{survey.resonanceScore}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -116,17 +117,17 @@ export function SurveyCard({ survey }: SurveyCardProps) {
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 20,
-    padding: 32,
-    marginHorizontal: 24,
-    marginVertical: 12,
+    borderRadius: 16,
+    padding: 24,
+    marginHorizontal: 16,
+    marginVertical: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.08,
-    shadowRadius: 16,
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
     elevation: 4,
     borderWidth: 0,
     transform: [{ scale: 1 }],
@@ -168,16 +169,16 @@ const styles = StyleSheet.create({
   resonanceScore: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#f0fdf4',
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
+    gap: 4,
   },
   scoreText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6b7280',
-    marginLeft: 4,
+    color: '#10b981',
   },
   title: {
     fontSize: 18,
@@ -196,15 +197,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#f3f4f6',
+    marginTop: 8,
   },
   responseCount: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 6,
   },
   responseText: {
-    fontSize: 13,
-    color: '#6b7280',
-    marginLeft: 6,
+    fontSize: 14,
+    color: '#6366f1',
     fontWeight: '500',
   },
   actions: {

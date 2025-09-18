@@ -109,7 +109,7 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
         <TouchableOpacity style={styles.surveyLink} onPress={handleSurveyPress}>
           <MessageSquare size={14} color="#6b7280" />
           <Text style={styles.surveyLinkText} numberOfLines={2}>
-            {survey ? `"${survey.title}"` : 'View original survey'}
+            {survey ? survey.title : 'View original survey'}
           </Text>
         </TouchableOpacity>
       )}
@@ -149,20 +149,19 @@ export function VoiceResponseCard({ response, showSurveyLink = true }: VoiceResp
 const styles = StyleSheet.create({
   card: {
     backgroundColor: '#ffffff',
-    borderRadius: 12,
+    borderRadius: 16,
     padding: 20,
-    marginHorizontal: 24,
-    marginVertical: 6,
+    marginHorizontal: 16,
+    marginVertical: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 1,
+      height: 2,
     },
-    shadowOpacity: 0.02,
-    shadowRadius: 4,
-    elevation: 1,
-    borderWidth: 1,
-    borderColor: '#f9fafb',
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 0,
   },
   header: {
     flexDirection: 'row',
@@ -291,4 +290,5 @@ const styles = StyleSheet.create({
     color: '#6b7280',
     fontWeight: '600',
   },
+
 });
