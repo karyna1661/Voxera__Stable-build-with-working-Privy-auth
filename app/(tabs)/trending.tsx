@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, FlatList, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
@@ -8,8 +8,7 @@ import { GridBackground } from '@/components/GridBackground';
 import { Survey } from '@/types/survey';
 import { PrivySignInButton } from '@/providers/auth';
 import { mockSurveys } from '@/mocks/surveys';
-import { Plus } from 'lucide-react-native';
-import { router } from 'expo-router';
+
 
 export default function TrendingScreen() {
   const { isLoading, refetch } = useSurveys('trending');
@@ -25,26 +24,16 @@ export default function TrendingScreen() {
     return <SurveyCard survey={item} />;
   };
 
-  const handleCreateSurvey = () => {
-    router.push('/create-survey');
-  };
+
 
   const renderHeader = () => (
     <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
-      {/* Header with title, create button, and sign in aligned */}
+      {/* Header with title and sign in aligned */}
       <View style={styles.headerRow}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Trending</Text>
         </View>
         <View style={styles.headerActions}>
-          <TouchableOpacity 
-            style={styles.createButton} 
-            onPress={handleCreateSurvey}
-            testID="create-survey-button"
-          >
-            <Plus size={18} color="#ffffff" strokeWidth={2} />
-            <Text style={styles.createButtonText}>Create</Text>
-          </TouchableOpacity>
           <PrivySignInButton compact={true} />
         </View>
       </View>
@@ -134,27 +123,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-  },
-  createButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#111827',
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 12,
-    gap: 6,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-  },
-  createButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#ffffff',
   },
 });

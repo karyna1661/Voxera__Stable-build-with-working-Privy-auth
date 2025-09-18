@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { TouchableOpacity, StyleSheet, Animated, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Animated } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import { router } from 'expo-router';
 import { useAuth } from '@/providers/auth';
@@ -79,9 +79,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 32,
-    left: 0,
-    right: 0,
-    alignItems: 'center',
+    right: 24,
     zIndex: 1000,
   },
   button: {
