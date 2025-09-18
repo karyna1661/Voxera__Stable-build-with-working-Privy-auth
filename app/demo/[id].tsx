@@ -128,7 +128,7 @@ export default function DemoDetailScreen() {
                 </View>
               </View>
               <View style={styles.resonanceScore}>
-                <TrendingUp size={16} color="#10b981" />
+                <TrendingUp size={16} color="#10b981" strokeWidth={1.5} />
                 <Text style={styles.scoreText}>{demo.resonanceScore}</Text>
               </View>
             </View>
@@ -342,12 +342,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
+    gap: 4,
   },
   scoreText: {
     fontSize: 14,
     fontWeight: '600',
     color: '#10b981',
-    marginLeft: 4,
   },
   title: {
     fontSize: 28,

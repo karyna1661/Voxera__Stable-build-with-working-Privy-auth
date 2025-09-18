@@ -258,16 +258,16 @@ const styles = StyleSheet.create({
   resonanceScore: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    borderRadius: 6,
+    backgroundColor: '#f0fdf4',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 8,
+    gap: 4,
   },
   scoreText: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: '600',
-    color: '#6b7280',
-    marginLeft: 3,
+    color: '#10b981',
   },
   audioSection: {
     flexDirection: 'row',

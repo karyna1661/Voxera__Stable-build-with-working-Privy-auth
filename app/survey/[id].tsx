@@ -105,7 +105,7 @@ export default function SurveyDetailScreen() {
               </View>
             </View>
             <View style={styles.resonanceScore}>
-              <TrendingUp size={16} color="#6b7280" />
+              <TrendingUp size={16} color="#10b981" strokeWidth={1.5} />
               <Text style={styles.scoreText}>{survey.resonanceScore}</Text>
             </View>
           </View>
@@ -279,16 +279,16 @@ const styles = StyleSheet.create({
   resonanceScore: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: '#f0fdf4',
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 8,
+    gap: 4,
   },
   scoreText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
-    marginLeft: 4,
+    color: '#10b981',
   },
   title: {
     fontSize: 28,
