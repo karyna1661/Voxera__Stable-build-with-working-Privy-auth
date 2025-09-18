@@ -77,11 +77,25 @@ export function SurveyCard({ survey }: SurveyCardProps) {
       <Text style={styles.title}>{survey.title}</Text>
       <Text style={styles.question} numberOfLines={3}>{survey.question}</Text>
       
+      {survey.tags && survey.tags.length > 0 && (
+        <View style={styles.tagsContainer}>
+          {survey.tags.map((tag, index) => (
+            <View key={`tag-${index}`} style={styles.tag}>
+              <Text style={styles.tagText}>{tag}</Text>
+            </View>
+          ))}
+        </View>
+      )}
+      
       <View style={styles.footer}>
-        <View style={styles.responseCount}>
+        <TouchableOpacity style={styles.responseCount} onPress={(e) => {
+          e.stopPropagation();
+          // Navigate to responses view - for now just handle the press
+          console.log('Navigate to responses for survey:', survey.id);
+        }}>
           <MessageCircle size={16} color="#6366f1" strokeWidth={1.5} />
           <Text style={styles.responseText}>{survey.responseCount} voice responses</Text>
-        </View>
+        </TouchableOpacity>
         
         <View style={styles.actions} testID="survey-actions">
           <TouchableOpacity
@@ -190,7 +204,26 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: '#4b5563',
     lineHeight: 22,
+    marginBottom: 12,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
     marginBottom: 16,
+  },
+  tag: {
+    backgroundColor: '#f1f5f9',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    borderWidth: 1,
+    borderColor: '#e2e8f0',
+  },
+  tagText: {
+    fontSize: 12,
+    color: '#64748b',
+    fontWeight: '500',
   },
   footer: {
     flexDirection: 'row',

@@ -146,9 +146,14 @@ export default function SurveyDetailScreen() {
         </TouchableOpacity>
 
         <View style={styles.responsesSection}>
-          <Text style={styles.responsesTitle}>
-            Responses ({survey.responses.length})
-          </Text>
+          <TouchableOpacity style={styles.responsesHeader} onPress={() => {
+            console.log('Navigate to all responses for survey:', survey.id);
+          }}>
+            <Text style={styles.responsesTitle}>
+              Responses ({survey.responses.length})
+            </Text>
+            <Text style={styles.viewAllText}>View All</Text>
+          </TouchableOpacity>
           
           {survey.responses.length === 0 ? (
             <View style={styles.noResponses}>
@@ -354,12 +359,22 @@ const styles = StyleSheet.create({
   responsesSection: {
     paddingTop: 16,
   },
+  responsesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    marginBottom: 20,
+  },
   responsesTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: '#111827',
-    marginBottom: 20,
-    paddingHorizontal: 24,
+  },
+  viewAllText: {
+    fontSize: 14,
+    color: '#6366f1',
+    fontWeight: '500',
   },
   noResponses: {
     alignItems: 'center',

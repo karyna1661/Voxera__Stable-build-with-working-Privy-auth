@@ -65,6 +65,7 @@ export interface Survey {
   responses: VoiceResponse[];
   pinataCid?: string;
   category?: string;
+  tags?: string[];
   additionalContext?: string;
   allowAnonymous?: boolean;
   enableTips?: boolean;

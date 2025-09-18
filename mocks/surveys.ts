@@ -228,7 +228,53 @@ export const mockSurveys: Survey[] = [
     createdAt: '2025-01-13T10:00:00Z',
     responseCount: 28,
     resonanceScore: 142,
-    responses: [],
+    responses: [
+      {
+        id: 'resp1',
+        vaultId: 'vault-legacy-1',
+        surveyId: '1',
+        userId: 'user7',
+        user: {
+          id: 'user7',
+          name: 'Jordan Lee',
+          avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face',
+        },
+        audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+        type: 'audio' as const,
+        duration: 45000,
+        transcript: 'I think the biggest barrier is definitely UX. Most people still find wallet interactions confusing and intimidating.',
+        createdAt: '2025-01-13T11:15:00Z',
+        resonanceScore: 23,
+        interactions: {
+          boosts: 12,
+          echoes: 8,
+          mutes: 1,
+        },
+      },
+      {
+        id: 'resp2',
+        vaultId: 'vault-legacy-1',
+        surveyId: '1',
+        userId: 'user8',
+        user: {
+          id: 'user8',
+          name: 'Taylor Swift',
+          avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
+        },
+        audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+        type: 'audio' as const,
+        duration: 62000,
+        transcript: 'Gas fees are still a concern for smaller transactions, even though Base is much cheaper than mainnet.',
+        createdAt: '2025-01-13T12:30:00Z',
+        resonanceScore: 31,
+        interactions: {
+          boosts: 18,
+          echoes: 11,
+          mutes: 2,
+        },
+      }
+    ],
+    tags: ['Base', 'Blockchain', 'UX'],
   },
   {
     id: '2',
@@ -243,7 +289,31 @@ export const mockSurveys: Survey[] = [
     createdAt: '2025-01-12T15:30:00Z',
     responseCount: 34,
     resonanceScore: 156,
-    responses: [],
+    responses: [
+      {
+        id: 'resp3',
+        vaultId: 'vault-legacy-2',
+        surveyId: '2',
+        userId: 'user9',
+        user: {
+          id: 'user9',
+          name: 'Chris Evans',
+          avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop&crop=face',
+        },
+        audioUrl: 'https://www.soundjay.com/misc/sounds/bell-ringing-05.wav',
+        type: 'audio' as const,
+        duration: 38000,
+        transcript: 'Farcaster feels more authentic. The community is smaller but more engaged, and I love the crypto-native features.',
+        createdAt: '2025-01-12T16:45:00Z',
+        resonanceScore: 19,
+        interactions: {
+          boosts: 9,
+          echoes: 7,
+          mutes: 0,
+        },
+      }
+    ],
+    tags: ['Farcaster', 'Social Media', 'Web3'],
   },
   {
     id: '3',
@@ -259,6 +329,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 41,
     resonanceScore: 124,
     responses: [],
+    tags: ['DeFi', 'Base', 'Protocols'],
   },
   {
     id: '4',
@@ -274,6 +345,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 52,
     resonanceScore: 189,
     responses: [],
+    tags: ['Social Networks', 'Web3', 'Future'],
   },
   {
     id: '5',
@@ -289,6 +361,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 29,
     resonanceScore: 98,
     responses: [],
+    tags: ['Base', 'dApps', 'Gaming'],
   },
   {
     id: '6',
@@ -304,6 +377,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 37,
     resonanceScore: 167,
     responses: [],
+    tags: ['Farcaster', 'Frames', 'Innovation'],
   },
   {
     id: '7',
@@ -319,6 +393,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 45,
     resonanceScore: 203,
     responses: [],
+    tags: ['Crypto', 'UX', 'Design'],
   },
   {
     id: '8',
@@ -334,6 +409,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 31,
     resonanceScore: 134,
     responses: [],
+    tags: ['Base', 'Layer 2', 'Comparison'],
   },
   {
     id: '9',
@@ -349,6 +425,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 67,
     resonanceScore: 178,
     responses: [],
+    tags: ['DEGEN', 'Token', 'Usage'],
   },
   {
     id: '10',
@@ -364,6 +441,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 89,
     resonanceScore: 245,
     responses: [],
+    tags: ['DEGEN', 'Holding', 'Strategy'],
   },
   {
     id: '11',
@@ -379,6 +457,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 54,
     resonanceScore: 167,
     responses: [],
+    tags: ['HIGHER', 'Direction', 'Community'],
   },
   {
     id: '12',
@@ -394,6 +473,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 42,
     resonanceScore: 198,
     responses: [],
+    tags: ['HIGHER', 'Features', 'Product'],
   },
   {
     id: '13',
@@ -409,6 +489,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 73,
     resonanceScore: 289,
     responses: [],
+    tags: ['HIGHER', 'Rewards', 'Community'],
   },
   {
     id: '14',
@@ -424,6 +505,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 91,
     resonanceScore: 234,
     responses: [],
+    tags: ['FALSENINE', 'Sports', 'Fan Experience'],
   },
   {
     id: '15',
@@ -439,6 +521,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 38,
     resonanceScore: 156,
     responses: [],
+    tags: ['REPLY', 'Communication', 'Usage'],
   },
   {
     id: '16',
@@ -454,6 +537,7 @@ export const mockSurveys: Survey[] = [
     responseCount: 29,
     resonanceScore: 142,
     responses: [],
+    tags: ['QR', 'Discovery', 'Projects'],
   }
 ];
 
