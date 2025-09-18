@@ -96,6 +96,11 @@ export default function DemoDetailScreen() {
     <GridBackground>
       <SafeAreaView style={styles.container} edges={['top']}>
         <ScrollView contentContainerStyle={styles.content}>
+          {/* Demo Header */}
+          <View style={styles.pageHeader}>
+            <Text style={styles.pageTitle}>Demo</Text>
+          </View>
+          
           <View style={styles.demoCard}>
             {/* Video Section */}
             <TouchableOpacity onPress={handlePlayDemo} style={styles.videoContainer}>
@@ -427,5 +432,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6b7280',
     textAlign: 'center',
+  },
+  pageHeader: {
+    paddingHorizontal: 24,
+    paddingTop: 16,
+    paddingBottom: 8,
+  },
+  pageTitle: {
+    fontSize: 32,
+    fontWeight: '800',
+    color: '#111827',
+    letterSpacing: -0.5,
   },
 });
