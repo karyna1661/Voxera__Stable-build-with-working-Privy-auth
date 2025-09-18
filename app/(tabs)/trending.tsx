@@ -3,49 +3,25 @@ import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
-import { VoiceResponseCard } from '@/components/VoiceResponseCard';
 import { RecordButton } from '@/components/RecordButton';
-import { Survey, VoiceResponse } from '@/types/survey';
+import { Survey } from '@/types/survey';
 import { PrivySignInButton } from '@/providers/auth';
-import { mockSurveys, mockResponses } from '@/mocks/surveys';
+import { mockSurveys } from '@/mocks/surveys';
 import { Plus } from 'lucide-react-native';
 import { router } from 'expo-router';
-
-type FeedItem = {
-  id: string;
-  type: 'survey' | 'response';
-  data: Survey | VoiceResponse;
-};
 
 export default function TrendingScreen() {
   const { isLoading, refetch } = useSurveys('trending');
   const insets = useSafeAreaInsets();
 
-  // Combine surveys and responses for the trending feed
-  const feedItems: FeedItem[] = React.useMemo(() => {
-    const surveyItems: FeedItem[] = mockSurveys.map(survey => ({
-      id: `survey-${survey.id}`,
-      type: 'survey' as const,
-      data: survey
-    }));
-    
-    const responseItems: FeedItem[] = mockResponses.map(response => ({
-      id: `response-${response.id}`,
-      type: 'response' as const,
-      data: response
-    }));
-    
-    // Interleave surveys and responses for a mixed feed
-    const combined = [...surveyItems, ...responseItems];
-    return combined.sort(() => Math.random() - 0.5); // Simple shuffle
+  // Show only surveys in trending page
+  const trendingSurveys: Survey[] = React.useMemo(() => {
+    // Sort by resonance score for trending
+    return [...mockSurveys].sort((a, b) => b.resonanceScore - a.resonanceScore);
   }, []);
 
-  const renderFeedItem = ({ item }: { item: FeedItem }) => {
-    if (item.type === 'survey') {
-      return <SurveyCard survey={item.data as Survey} />;
-    } else {
-      return <VoiceResponseCard response={item.data as VoiceResponse} showSurveyLink={true} />;
-    }
+  const renderSurveyItem = ({ item }: { item: Survey }) => {
+    return <SurveyCard survey={item} />;
   };
 
   const handleCreateSurvey = () => {
@@ -72,22 +48,22 @@ export default function TrendingScreen() {
         </View>
       </View>
       
-      <Text style={styles.subtitle}>High-resonance surveys and voice responses gaining momentum</Text>
+      <Text style={styles.subtitle}>High-resonance surveys gaining momentum in the community</Text>
     </View>
   );
 
   const renderEmpty = () => (
     <View style={styles.empty}>
-      <Text style={styles.emptyText}>No trending content</Text>
-      <Text style={styles.emptySubtext}>Engage with surveys and responses to see trends</Text>
+      <Text style={styles.emptyText}>No trending surveys</Text>
+      <Text style={styles.emptySubtext}>Create or engage with surveys to see trends</Text>
     </View>
   );
 
   return (
     <View style={styles.container}>
       <FlatList
-        data={feedItems}
-        renderItem={renderFeedItem}
+        data={trendingSurveys}
+        renderItem={renderSurveyItem}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
