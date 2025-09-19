@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { View, StyleSheet, useWindowDimensions, Platform } from 'react-native';
+import { View, StyleSheet, useWindowDimensions, Platform, ColorValue } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Image } from 'expo-image';
 
@@ -9,9 +9,10 @@ interface GridBackgroundProps {
   mode?: 'shader' | 'gradient';
   shaderUrl?: string;
   testID?: string;
+  gradientLines?: boolean;
 }
 
-export function GridBackground({ children, style, mode = 'shader', shaderUrl, testID }: GridBackgroundProps) {
+export function GridBackground({ children, style, mode = 'shader', shaderUrl, testID, gradientLines = true }: GridBackgroundProps) {
   const { width, height } = useWindowDimensions();
   const vGap = 16;
   const hGap = 24;
@@ -26,6 +27,18 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl, te
   }, [shaderUrl]);
 
   const useShader = mode === 'shader' && !shaderFailed && Platform.select({ web: true, default: true });
+
+  const lineHColors = useMemo<readonly [ColorValue, ColorValue]>(() => (
+    gradientLines
+      ? ['rgba(148,255,209,0.14)', 'rgba(107,245,255,0.14)'] as const
+      : ['rgba(255,255,255,0.06)', 'rgba(255,255,255,0.06)'] as const
+  ), [gradientLines]);
+
+  const lineVColors = useMemo<readonly [ColorValue, ColorValue]>(() => (
+    gradientLines
+      ? ['rgba(148,255,209,0.14)', 'rgba(255,255,255,0.14)'] as const
+      : ['rgba(255,255,255,0.06)', 'rgba(255,255,255,0.06)'] as const
+  ), [gradientLines]);
 
   return (
     <View style={[styles.container, style]} testID={testID ?? 'grid-background'}>
@@ -53,12 +66,24 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl, te
       <View pointerEvents="none" style={styles.linesContainer}>
         <View style={styles.horizontalLines}>
           {Array.from({ length: hCount }).map((_, i) => (
-            <View key={`h-${i}`} style={[styles.hLine, { top: i * hGap }]} />
+            <LinearGradient
+              key={`h-${i}`}
+              colors={lineHColors}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={[styles.hLine, { top: i * hGap }]}
+            />
           ))}
         </View>
         <View style={styles.verticalLines}>
           {Array.from({ length: vCount }).map((_, i) => (
-            <View key={`v-${i}`} style={[styles.vLine, { left: i * vGap }]} />
+            <LinearGradient
+              key={`v-${i}`}
+              colors={lineVColors}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 0, y: 1 }}
+              style={[styles.vLine, { left: i * vGap }]}
+            />
           ))}
         </View>
       </View>
@@ -79,14 +104,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    borderRadius: 1,
   },
   vLine: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    borderRadius: 1,
   },
   content: { flex: 1, position: 'relative', zIndex: 2 },
 });
