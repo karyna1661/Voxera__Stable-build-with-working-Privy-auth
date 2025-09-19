@@ -42,7 +42,7 @@ export default function MarketScreen() {
   };
 
   return (
-    <GridBackground style={styles.container}>
+    <GridBackground style={styles.container} testID="market-grid-bg">
       <FlatList
         data={mockDemoVideos}
         renderItem={renderDemo}
@@ -228,8 +228,8 @@ const styles = StyleSheet.create({
 const cardStyles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    marginHorizontal: spacing(12),
-    marginVertical: spacing(8),
+    marginHorizontal: 12,
+    marginVertical: 8,
     borderRadius: radius(16),
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

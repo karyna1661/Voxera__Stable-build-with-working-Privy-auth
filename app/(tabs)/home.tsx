@@ -106,7 +106,7 @@ export default function HomeScreen() {
   );
 
   return (
-    <GridBackground style={styles.container}>
+    <GridBackground style={styles.container} testID="home-grid-bg">
       <FlatList
         data={feedItems}
         renderItem={renderFeedItem}
@@ -218,7 +218,7 @@ function DemoVideoCard({ demo }: { demo: DemoVideo }) {
 const demoStyles = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
-    marginHorizontal: spacing(12),
+    marginHorizontal: 12,
     marginVertical: 8,
     borderRadius: 16,
     shadowColor: '#000',

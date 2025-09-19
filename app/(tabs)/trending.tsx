@@ -51,7 +51,7 @@ export default function TrendingScreen() {
   );
 
   return (
-    <GridBackground style={styles.container}>
+    <GridBackground style={styles.container} testID="trending-grid-bg">
       <FlatList
         data={trendingSurveys}
         renderItem={renderSurveyItem}

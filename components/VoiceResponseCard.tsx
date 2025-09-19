@@ -226,8 +226,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderRadius: radius(16),
     padding: spacing(16),
-    marginHorizontal: spacing(12),
-    marginVertical: spacing(8),
+    marginHorizontal: 12,
+    marginVertical: 8,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,

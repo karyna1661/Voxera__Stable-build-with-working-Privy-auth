@@ -80,7 +80,7 @@ export default function DemoDetailScreen() {
 
   if (!demo) {
     return (
-      <GridBackground>
+      <GridBackground testID="demo-detail-grid-bg">
         <SafeAreaView style={styles.container}>
           <View style={styles.error}>
             <Text style={styles.errorText}>Demo not found</Text>
@@ -94,7 +94,7 @@ export default function DemoDetailScreen() {
   }
 
   return (
-    <GridBackground>
+    <GridBackground testID="demo-detail-grid-bg">
       <SafeAreaView style={styles.container} edges={['top']}>
         <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
           {/* Demo Header */}

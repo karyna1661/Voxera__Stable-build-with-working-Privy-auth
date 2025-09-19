@@ -8,9 +8,10 @@ interface GridBackgroundProps {
   style?: any;
   mode?: 'shader' | 'gradient';
   shaderUrl?: string;
+  testID?: string;
 }
 
-export function GridBackground({ children, style, mode = 'shader', shaderUrl }: GridBackgroundProps) {
+export function GridBackground({ children, style, mode = 'shader', shaderUrl, testID }: GridBackgroundProps) {
   const { width, height } = useWindowDimensions();
   const vGap = 16;
   const hGap = 24;
@@ -20,17 +21,14 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
   const [shaderFailed, setShaderFailed] = useState<boolean>(false);
 
   const animatedUrl = useMemo(() => {
-    const fallback = 'https://images.shadergradient.co/4f3b9e1f-animated.gif';
-    return (
-      shaderUrl ??
-      'https://www.shadergradient.co/api/export?animate=on&axesHelper=off&brightness=1.2&cAzimuthAngle=170&cDistance=4.4&cPolarAngle=70&cameraZoom=1&color1=%2394ffd1&color2=%236bf5ff&color3=%23ffffff&destination=onCanvas&embedMode=off&envPreset=city&format=gif&fov=45&frameRate=10&gizmoHelper=hide&grain=off&lightType=3d&pixelDensity=1.2&positionX=0&positionY=0.9&positionZ=-0.3&range=disabled&rangeEnd=40&rangeStart=0&reflection=0.1&rotationX=45&rotationY=0&rotationZ=0&shader=defaults&toggleAxis=false&type=plane&uAmplitude=3.3&uDensity=3.3&uFrequency=0&uSpeed=1.1&uStrength=4.6&uTime=0&wireframe=false&zoomOut=true'
-    ) || fallback;
+    const fallback = 'https://www.shadergradient.co/api/export?animate=on&axesHelper=off&brightness=1.2&cAzimuthAngle=170&cDistance=4.4&cPolarAngle=70&cameraZoom=1&color1=%2394ffd1&color2=%236bf5ff&color3=%23ffffff&destination=onCanvas&embedMode=off&envPreset=city&format=gif&fov=45&frameRate=10&gizmoHelper=hide&grain=off&lightType=3d&pixelDensity=1.2&positionX=0&positionY=0.9&positionZ=-0.3&range=disabled&rangeEnd=40&rangeStart=0&reflection=0.1&rotationX=45&rotationY=0&rotationZ=0&shader=defaults&toggleAxis=false&type=plane&uAmplitude=3.3&uDensity=3.3&uFrequency=0&uSpeed=1.1&uStrength=4.6&uTime=0&wireframe=false&zoomOut=true';
+    return shaderUrl ?? fallback;
   }, [shaderUrl]);
 
   const useShader = mode === 'shader' && !shaderFailed && Platform.select({ web: true, default: true });
 
   return (
-    <View style={[styles.container, style]} testID="grid-background">
+    <View style={[styles.container, style]} testID={testID ?? 'grid-background'}>
       {useShader ? (
         <Image
           source={{ uri: animatedUrl }}
@@ -45,7 +43,7 @@ export function GridBackground({ children, style, mode = 'shader', shaderUrl }: 
         />
       ) : (
         <LinearGradient
-          colors={['#0b1120', '#0b1120', '#0b1120']}
+          colors={["#94ffd1", "#6bf5ff", "#ffffff"]}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
           style={styles.background}
@@ -81,14 +79,14 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     height: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
   },
   vLine: {
     position: 'absolute',
     top: 0,
     bottom: 0,
     width: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
   },
   content: { flex: 1, position: 'relative', zIndex: 2 },
 });

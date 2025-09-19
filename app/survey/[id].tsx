@@ -58,7 +58,7 @@ export default function SurveyDetailScreen() {
 
   if (isLoading) {
     return (
-      <GridBackground>
+      <GridBackground testID="survey-detail-grid-bg">
         <SafeAreaView style={styles.container}>
           <View style={styles.loading}>
             <Text style={styles.loadingText}>Loading survey...</Text>
@@ -70,7 +70,7 @@ export default function SurveyDetailScreen() {
 
   if (!survey) {
     return (
-      <GridBackground>
+      <GridBackground testID="survey-detail-grid-bg">
         <SafeAreaView style={styles.container}>
           <View style={styles.error}>
             <Text style={styles.errorText}>Survey not found</Text>
@@ -84,7 +84,7 @@ export default function SurveyDetailScreen() {
   }
 
   return (
-    <GridBackground>
+    <GridBackground testID="survey-detail-grid-bg">
       <SafeAreaView style={styles.container} edges={['top']}>
         <View style={styles.header}>
           <TouchableOpacity style={styles.backIcon} onPress={handleBack}>
