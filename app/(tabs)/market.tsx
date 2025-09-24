@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet, FlatList, Text, TouchableOpacity, Image } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { GridBackground } from '@/components/GridBackground';
+import { ThreeDHeading } from '@/components/ThreeDHeading';
 import { PrivySignInButton } from '@/providers/auth';
 import { Play, MessageCircle, TrendingUp, Upload, Repeat, X } from 'lucide-react-native';
 import { mockDemoVideos } from '@/mocks/surveys';
@@ -20,7 +21,7 @@ export default function MarketScreen() {
     <View style={[styles.header, { paddingTop: insets.top + 24 }]}>
       <View style={styles.headerRow}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Demo Market</Text>
+          <ThreeDHeading title="Demo Market" textList={["Demo Market","For You","Trending","Launch","Products","Feedback"]} />
         </View>
         <View style={styles.signInContainer}>
           <PrivySignInButton compact={true} />

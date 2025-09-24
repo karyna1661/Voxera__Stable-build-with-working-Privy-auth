@@ -6,6 +6,7 @@ import { useSurveys } from '@/hooks/use-surveys';
 import { SurveyCard } from '@/components/SurveyCard';
 import { RecordButton } from '@/components/RecordButton';
 import { GridBackground } from '@/components/GridBackground';
+import { ThreeDHeading } from '@/components/ThreeDHeading';
 import { Survey } from '@/types/survey';
 import { PrivySignInButton } from '@/providers/auth';
 import { mockSurveys } from '@/mocks/surveys';
@@ -32,7 +33,7 @@ export default function TrendingScreen() {
       {/* Header with title and sign in aligned */}
       <View style={styles.headerRow}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Trending</Text>
+          <ThreeDHeading title="Trending" textList={["Trending","For You","Demo Market","Voices","Hot","Now"]} />
         </View>
         <View style={styles.headerActions}>
           <PrivySignInButton compact={true} />

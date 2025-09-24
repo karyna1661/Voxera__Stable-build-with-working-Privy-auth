@@ -6,6 +6,7 @@ import { useTrendingResponses } from '@/hooks/use-surveys';
 import { VoiceResponseCard } from '@/components/VoiceResponseCard';
 import { RecordButton } from '@/components/RecordButton';
 import { GridBackground } from '@/components/GridBackground';
+import { ThreeDHeading } from '@/components/ThreeDHeading';
 import { DemoVideo, VoiceResponse } from '@/types/survey';
 import { PrivySignInButton, useAuth } from '@/providers/auth';
 import { X, Play, MessageCircle, TrendingUp, Repeat } from 'lucide-react-native';
@@ -70,7 +71,7 @@ export default function HomeScreen() {
       {/* Header with title and sign in aligned */}
       <View style={styles.headerRow}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>For You</Text>
+          <ThreeDHeading title="For You" textList={["For You","Demos","Trending","Voices","Resonance","Community"]} />
         </View>
         <View style={styles.signInContainer}>
           <PrivySignInButton compact={true} />
