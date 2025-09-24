@@ -1,17 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-
-
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import createContextHook from '@nkzw/create-context-hook';
-import { AuthState, User } from '@/types/survey';
+import { AuthState, User as AppUser } from '@/types/survey';
 import { apiService } from '@/services/api';
 import { useAuthStorage } from '@/providers/storage';
+import { usePrivy } from '@privy-io/react-auth';
 
-
-
-
-// Enhanced authentication context with Privy integration
 const [AuthContextProvider, useAuthContext] = createContextHook(() => {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
@@ -21,7 +15,7 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
   });
 
   const authStorage = useAuthStorage();
-  const ready = true;
+  const { ready, authenticated, user: privyUser, login, logout, getAccessToken } = usePrivy();
 
   const clearAuth = useCallback(async () => {
     try {
@@ -39,18 +33,16 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
     }
   }, [authStorage]);
 
-  const saveAuth = useCallback(async (token: string, user: User) => {
-    if (!token?.trim() || token.length > 1000) {
+  const saveAuth = useCallback(async (token: string, user: AppUser) => {
+    if (!token?.trim() || token.length > 2000) {
       throw new Error('Invalid token');
     }
     if (!user?.id?.trim() || !user?.address?.trim()) {
       throw new Error('Invalid user data');
     }
-    
     try {
       const sanitizedToken = token.trim();
       const sanitizedUserStr = JSON.stringify(user);
-      
       await authStorage.setAuthToken(sanitizedToken);
       await authStorage.setAuthUser(sanitizedUserStr);
       apiService.setAuthToken(sanitizedToken);
@@ -70,9 +62,8 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
     try {
       const token = await authStorage.getAuthToken();
       const userStr = await authStorage.getAuthUser();
-      
       if (token && userStr) {
-        const user = JSON.parse(userStr) as User;
+        const user = JSON.parse(userStr) as AppUser;
         apiService.setAuthToken(token);
         setAuthState({
           user,
@@ -89,43 +80,63 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
     }
   }, [authStorage]);
 
-
-
-  // Handle Privy authentication state changes
   useEffect(() => {
     loadStoredAuth();
   }, [loadStoredAuth]);
 
-  // Load stored auth on mount
-
+  useEffect(() => {
+    const syncFromPrivy = async () => {
+      try {
+        if (!ready) return;
+        if (authenticated && privyUser) {
+          const token = (await getAccessToken?.()) ?? '';
+          const primaryAddress = (() => {
+            const addr = (privyUser as any)?.wallet?.address as string | undefined;
+            if (addr?.trim()) return addr;
+            const accounts = (privyUser as any)?.linkedAccounts as Array<any> | undefined;
+            const wallet = accounts?.find?.((a: any) => a.type === 'wallet' && a.address?.length > 0);
+            return wallet?.address ?? '';
+          })();
+          const mappedUser: AppUser = {
+            id: privyUser.id,
+            address: primaryAddress || '0x0000000000000000000000000000000000000000',
+            name: (privyUser as any)?.email?.address ?? (privyUser as any)?.displayName ?? 'User',
+            avatar: undefined,
+            createdAt: new Date().toISOString(),
+            email: (privyUser as any)?.email?.address,
+            walletType: 'walletconnect',
+          };
+          if (token?.trim()) {
+            await saveAuth(token, mappedUser);
+          }
+        }
+      } catch (e) {
+        console.error('Privy sync failed:', e);
+      }
+    };
+    void syncFromPrivy();
+  }, [ready, authenticated, privyUser, getAccessToken, saveAuth]);
 
   const signIn = useCallback(async () => {
     try {
       setAuthState(prev => ({ ...prev, isLoading: true }));
-      const now = Date.now();
-      const user: User = {
-        id: `guest_${now}`,
-        address: `0x${now.toString(16).padStart(8, '0')}`,
-        name: `Guest ${String(now).slice(-4)}`,
-        createdAt: new Date().toISOString(),
-      };
-      const token = `guest_${now}`;
-      await saveAuth(token, user);
+      await login?.();
     } catch (error) {
       console.error('Failed to sign in:', error);
       setAuthState(prev => ({ ...prev, isLoading: false }));
       throw error;
     }
-  }, [saveAuth]);
+  }, [login]);
 
   const signOut = useCallback(async () => {
     try {
+      await logout?.();
       await clearAuth();
     } catch (error) {
       console.error('Failed to sign out:', error);
       await clearAuth();
     }
-  }, [clearAuth]);
+  }, [logout, clearAuth]);
 
   return useMemo(() => ({
     ...authState,
@@ -136,7 +147,6 @@ const [AuthContextProvider, useAuthContext] = createContextHook(() => {
   }), [authState, signIn, signOut, saveAuth]);
 });
 
-// Authentication provider with Privy integration
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   return (
     <AuthContextProvider>
@@ -145,11 +155,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Privy sign-in button with full authentication options
 export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
   const auth = useAuth();
-  const [isConnecting, setIsConnecting] = useState(false);
-  
+  const [isConnecting, setIsConnecting] = useState<boolean>(false);
   const handleConnect = useCallback(async () => {
     try {
       setIsConnecting(true);
@@ -160,7 +168,6 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
       setIsConnecting(false);
     }
   }, [auth]);
-  
   const handleDisconnect = useCallback(async () => {
     try {
       await auth.signOut();
@@ -168,8 +175,6 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
       console.error('Failed to disconnect:', error);
     }
   }, [auth]);
-  
-  // Show loading state
   if (isConnecting || auth.isLoading) {
     return (
       <TouchableOpacity testID="privy-connecting" style={[compact ? styles.compactButton : styles.loadingButton]} disabled>
@@ -177,11 +182,9 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
       </TouchableOpacity>
     );
   }
-  
   if (auth.isAuthenticated && auth.user) {
     const authUser = auth.user;
     let displayText = '';
-    
     if (authUser.farcaster?.username) {
       displayText = `@${authUser.farcaster.username}`;
     } else if (authUser.name) {
@@ -190,7 +193,6 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
       const address = authUser.address;
       displayText = `${address.slice(0, 6)}...${address.slice(-4)}`;
     }
-    
     return (
       <TouchableOpacity 
         testID="privy-authenticated"
@@ -203,7 +205,6 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
       </TouchableOpacity>
     );
   }
-  
   return (
     <TouchableOpacity 
       testID="privy-sign-in"
@@ -217,10 +218,7 @@ export function PrivySignInButton({ compact = false }: { compact?: boolean }) {
   );
 }
 
-// Export the auth hook
 export const useAuth = useAuthContext;
-
-// Backward compatibility aliases
 export const EthereumSignInButton = PrivySignInButton;
 export const EthereumLoginButton = PrivySignInButton;
 export const PrivyLoginButton = PrivySignInButton;

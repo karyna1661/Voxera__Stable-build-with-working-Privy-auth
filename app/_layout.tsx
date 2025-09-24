@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StorageProvider } from "@/providers/storage";
 import { AuthProvider } from "@/providers/auth";
 import { trpc, trpcClient } from "@/lib/trpc";
+import { PrivyProvider } from "@privy-io/expo";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -87,15 +88,19 @@ export default function RootLayout() {
   return (
     <AppErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <trpc.Provider client={trpcClient} queryClient={queryClient}>
-          <StorageProvider>
-            <AuthProvider>
-              <GestureHandlerRootView style={styles.container}>
-                <RootLayoutNav />
-              </GestureHandlerRootView>
-            </AuthProvider>
-          </StorageProvider>
-        </trpc.Provider>
+        <PrivyProvider
+          appId={process.env.EXPO_PUBLIC_PRIVY_APP_ID ?? ""}
+        >
+          <trpc.Provider client={trpcClient} queryClient={queryClient}>
+            <StorageProvider>
+              <AuthProvider>
+                <GestureHandlerRootView style={styles.container}>
+                  <RootLayoutNav />
+                </GestureHandlerRootView>
+              </AuthProvider>
+            </StorageProvider>
+          </trpc.Provider>
+        </PrivyProvider>
       </QueryClientProvider>
     </AppErrorBoundary>
   );
