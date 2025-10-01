@@ -4,7 +4,7 @@ import createContextHook from '@nkzw/create-context-hook';
 import { AuthState, User as AppUser } from '@/types/survey';
 import { apiService } from '@/services/api';
 import { useAuthStorage } from '@/providers/storage';
-import { usePrivy } from '@privy-io/react-auth';
+import { usePrivy } from '@/providers/privy';
 
 const [AuthContextProvider, useAuthContext] = createContextHook(() => {
   const [authState, setAuthState] = useState<AuthState>({
