@@ -2,7 +2,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import React, { useEffect } from "react";
-import { StyleSheet, Text, View, Platform } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { StorageProvider } from "@/providers/storage";
 import { AuthProvider } from "@/providers/auth";
@@ -84,14 +84,8 @@ export default function RootLayout() {
     return () => clearTimeout(timer);
   }, []);
 
-  const PrivyWrapper = Platform.OS === 'web' 
-    ? ({ children }: { children: React.ReactNode }) => <>{children}</>
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    : require('@privy-io/expo').PrivyProvider;
-
-  const privyProps = Platform.OS === 'web' 
-    ? {}
-    : { appId: process.env.EXPO_PUBLIC_PRIVY_APP_ID ?? "" };
+  const PrivyWrapper = ({ children }: { children: React.ReactNode }) => <>{children}</>;
+  const privyProps = {};
 
   return (
     <AppErrorBoundary>

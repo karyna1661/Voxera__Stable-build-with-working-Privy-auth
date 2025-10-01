@@ -1,4 +1,4 @@
-import { Platform } from 'react-native';
+import { useMemo } from 'react';
 
 export type UsePrivyReturn = {
   ready: boolean;
@@ -9,11 +9,17 @@ export type UsePrivyReturn = {
   getAccessToken?: () => Promise<string>;
 };
 
-if (Platform.OS === 'web') {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  module.exports = require('./privy.web');
-} else {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { usePrivy: useExpoPrivy } = require('@privy-io/expo');
-  module.exports = { usePrivy: useExpoPrivy };
+export function usePrivy(): UsePrivyReturn {
+  return useMemo(() => ({
+    ready: true,
+    authenticated: false,
+    user: null,
+    login: async () => {
+      console.log('Privy login not implemented - authentication disabled');
+    },
+    logout: async () => {
+      console.log('Privy logout not implemented');
+    },
+    getAccessToken: async () => '',
+  }), []);
 }
